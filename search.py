@@ -3,7 +3,6 @@ import settings
 import simplejson as json
 import urllib
 import urllib2
-from place import Place
 import place
 
 YELP_WIFI_CAFE_SEARCH_TERM ='wifi+cafe'
@@ -14,7 +13,8 @@ def do(term="", location="", lat="", lon=""):
     url = make_search_url(term, location, lat, lon)
     signed_url = get_signed_url(url)
     response = get_results(signed_url)
-    return parse_results(response)
+    results = parse_results(response)
+    return str(results)
 
 def make_search_url(term, location, lat, lon):
     if(term==""):
@@ -51,6 +51,6 @@ def get_results(signed_url):
 def parse_results(response):
     places = []
     for b in response[YELP_BUSINESSES_TERM]:
-        p = place.new_from_json(b)
+        p = json.dumps(place.new_place_dict_from_json(b))
         places.append(p)
     return places
