@@ -6,7 +6,7 @@ url_root = "http://splitmyri.de/cofi/"
 # Search by location
 payload = {
     "term":"",
-    "locaotin":"nyc",
+    "location":"nyc",
     "lat":None,
     "lon":None
     }
