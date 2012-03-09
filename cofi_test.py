@@ -7,8 +7,8 @@ url_root = "http://splitmyri.de/cofi/"
 payload = {
     "term":"",
     "location":"nyc",
-    "lat":None,
-    "lon":None
+    "lat":"",
+    "lon":""
     }
 r = requests.get(url_root, data=payload)
 print r.text

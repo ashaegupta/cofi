@@ -8,8 +8,7 @@ import simplejson
 
 import search
 
-class CofiHandler():
-
+class CofiHandler(tornado.web.RequestHandler):
     # Search for places
     def get(self):
         
@@ -22,7 +21,7 @@ class CofiHandler():
         resp = search.do(term=term, location=location, lat=lat, lon=lon)
         self.write(resp)
 
-class MainHandler():
+class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("This is the homepage")
 
