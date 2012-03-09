@@ -13,10 +13,10 @@ class CofiHandler(tornado.web.RequestHandler):
     def get(self):
         
         #TODO CHECK PARAMS
-        term = self.get_argument("term")
-        location = self.get_argument("location")
-        lat = self.get_argument("lat")
-        lon = self.get_argument("lon")
+        term = self.get_argument("term", None)
+        location = self.get_argument("location", None)
+        lat = self.get_argument("lat", None)
+        lon = self.get_argument("lon", None)
         resp = search.do(term=term, location=location, lat=lat, lon=lon)
         self.write(resp)
 

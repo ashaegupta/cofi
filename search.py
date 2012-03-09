@@ -17,9 +17,9 @@ def do(term="", location="", lat="", lon=""):
     return str(results)
 
 def make_search_url(term, location, lat, lon):
-    if(term==""):
+    if not term:
         term = YELP_WIFI_CAFE_SEARCH_TERM
-    if(location == ""):
+    if not location:
         return YELP_ROOT_URL + term + "&ll=" + lat + "," + lon
     else:
         return YELP_ROOT_URL + term + "&location=" + location
