@@ -10,7 +10,7 @@ YELP_WIFI_CAFE_SEARCH_TERM ='wifi+cafe'
 YELP_ROOT_URL = 'http://api.yelp.com/v2/search?term='
 YELP_BUSINESSES_TERM = "businesses"
 
-def do(term="", location="", lat=None, lon=None):
+def do(term="", location="", lat="", lon=""):
     url = make_search_url(term, location, lat, lon)
     signed_url = get_signed_url(url)
     response = get_results(signed_url)
@@ -20,7 +20,7 @@ def make_search_url(term, location, lat, lon):
     if(term==""):
         term = YELP_WIFI_CAFE_SEARCH_TERM
     if(location == ""):
-        return YELP_ROOT_URL + term + "&ll=" + str(lat) + "," + str(lon)
+        return YELP_ROOT_URL + term + "&ll=" + lat + "," + lon
     else:
         return YELP_ROOT_URL + term + "&location=" + location
 

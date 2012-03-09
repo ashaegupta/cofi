@@ -1,6 +1,4 @@
 import requests
-
-
 url_root = "http://splitmyri.de/cofi/"
 
 # Search by location
