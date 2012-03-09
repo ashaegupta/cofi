@@ -6,7 +6,7 @@ import tornado.ioloop
 import tornado.web
 import simplejson
 
-from cofi import search
+import search
 
 class BaseHandler(tornado.web.RequestHandler):
     def check_params(self, required_params):
