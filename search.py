@@ -49,8 +49,8 @@ def get_results(signed_url):
       return response
     
 def parse_results(response):
-    places = []
+    results = []
     for b in response[YELP_BUSINESSES_TERM]:
         p = json.dumps(place.new_place_dict_from_json(b))
-        places.append(p)
-    return places
+        results.append(p)
+    return results
