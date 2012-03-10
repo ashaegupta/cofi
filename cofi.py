@@ -16,7 +16,8 @@ class CofiHandler(tornado.web.RequestHandler):
         lon = self.get_argument("lon", None)
         
         resp = search.do(term=term, lat=lat, lon=lon)
-        self.write(json.dumps(resp))
+        #self.write(json.dumps(resp))
+        self.write(lat+lon+term)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
