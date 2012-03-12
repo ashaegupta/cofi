@@ -5,7 +5,7 @@ import tornado.ioloop
 import tornado.web
 import simplejson as json
 
-import search
+from lib import search
 
 class CofiHandler(tornado.web.RequestHandler):
     # Search for places

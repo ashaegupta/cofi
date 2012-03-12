@@ -1,11 +1,12 @@
 import oauth2
-import settings
 import simplejson as json
 import urllib
 import urllib2
-import place
-import APIResponse
 from datetime import date
+
+import place
+from utils import APIResponse
+from utils import settings
 
 YELP_WIFI_CAFE_SEARCH_TERM ='wifi+cafe'
 YELP_ROOT_URL = 'http://api.yelp.com/v2/search?term='
@@ -32,10 +33,7 @@ def do(term="", lat="", lon=""):
     signed_url = get_signed_url(url)
     response = get_response(signed_url)
     yelp_results = yelp_parse_response(response)
-    if yelp_results.has_key("error"):
-        return yelp_results
-    
-    if not do_fs_search:
+    if yelp_results.has_key("error") or not do_fs_search:
         return yelp_results
         
     if do_fs_search:
@@ -53,7 +51,8 @@ def checkparams(term, lat, lon):
 def yelp_make_url(term, lat, lon):
     if not term:
         term = YELP_WIFI_CAFE_SEARCH_TERM
-    return YELP_ROOT_URL + term + "&ll=" + lat + "," + lon
+    url = YELP_ROOT_URL + term + "&ll=" + lat + "," + lon
+    return url
     
 def fs_make_url(lat, lon):
     return FS_ROOT_URL + "&ll=" + lat + "," + lon + FS_CAFE_SEARCH_TERM + FS_SEARCH_RADIUS + "&client_id=" + settings.FS_CLIENT_ID + "&client_secret=" + settings.FS_CLIENT_SECRET + "&v=" + date.today().strftime("%Y%m%d")
@@ -84,14 +83,14 @@ def get_response(signed_url):
     
 def yelp_parse_response(response):
     results = {}
-    results["data"] = {}
+    results["data"] = []
     results["has_fs_results"] = False
+    no_phone_count = 0
+    places = response.get("businesses")
+    print len(places)
     try:
-        for b in response[YELP_BUSINESSES_TERM]:
-            if b.has_key("phone"):
-                key = b["phone"]
-                value = place.new_place_dict_from_json(b)
-                results["body"][key] = value
+        for p in places:
+            results["data"].append(p)
     except:
         return APIResponse.YELP_API_INVALID_RESULTS
     return results
