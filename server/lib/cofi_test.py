@@ -17,3 +17,8 @@ url = url_root + "lat=" + lat + "&lon=" + lon
 r = requests.get(url)
 resp = r.content
 resp
+
+''''
+http://splitmyri.de/cofi?lat=40.724925&lon=-73.9828847
+
+'''
