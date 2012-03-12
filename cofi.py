@@ -10,14 +10,12 @@ import search
 class CofiHandler(tornado.web.RequestHandler):
     # Search for places
     def get(self):
-        
         term = self.get_argument("term", None)
         lat = self.get_argument("lat", None)
         lon = self.get_argument("lon", None)
-        
+        print self.request.arguments
         resp = search.do(term=term, lat=lat, lon=lon)
-        #self.write(json.dumps(resp))
-        self.write(lat+lon+term)
+        self.write(json.dumps(resp))
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -29,7 +27,7 @@ app_settings = {
 
 application = tornado.web.Application([
     (r"/", MainHandler),                    # get() - homepage - link to app
-    (r"/cofi/.*", CofiHandler)              # get() - places 
+    (r"/cofi.*", CofiHandler)              # get() - places 
     ],  
      **app_settings)
 

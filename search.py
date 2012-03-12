@@ -84,13 +84,13 @@ def get_response(signed_url):
     
 def yelp_parse_response(response):
     results = {}
-    results["body"] = {}
-    results["has_ordered_results"] = False
+    results["data"] = {}
+    results["has_fs_results"] = False
     try:
         for b in response[YELP_BUSINESSES_TERM]:
             if b.has_key("phone"):
                 key = b["phone"]
-                value = json.dumps(place.new_place_dict_from_json(b))
+                value = place.new_place_dict_from_json(b)
                 results["body"][key] = value
     except:
         return APIResponse.YELP_API_INVALID_RESULTS
