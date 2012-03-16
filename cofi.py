@@ -31,18 +31,17 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("This is the homepage")
 
-app_settings = {
+settings = {
     'debug': True, # enables automatic reruning of this file when edited
     'static_path': os.path.join(os.path.dirname(__file__), "static")
 }
-
 
 application = tornado.web.Application([
     (r"/", MainHandler),
     (r"/cofi.*", CofiHandler),                    
     (r"/cofi/places.*", CofiPlacesHandler)              
     ],  
-     **app_settings)
+     **settings)
 
 if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
