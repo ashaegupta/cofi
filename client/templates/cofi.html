@@ -19,12 +19,17 @@ function(e){
 //e.changedtouches
 }, false);
 
+
 ---------->
 
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+     <link rel="apple-touch-icon" href="file:///Users/ashaegupta/Dropbox/Code/cofi/client/assets/app-icon.png"/>
+     <link rel="apple-touch-startup-image" href="file:///Users/ashaegupta/Dropbox/Code/cofi/client/assets/app-homescreen.png" />
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
@@ -33,11 +38,11 @@ function(e){
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAaBTMLD9cn5lMR5qF9NGwumhWZOkxosBY&sensor=true">
     </script>
-    <script type="text/javascript">
-        src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAaBTMLD9cn5lMR5qF9NGwumhWZOkxosBY&sensor=true">
+    <script type="text/javascript"
+        src="file:///Users/ashaegupta/Dropbox/Code/cofi/client/js/cofi.js">
     </script>
   </head>
-  <body onload="initialize()">
+  <body onload="get_and_map_places()">
     <div id="map_canvas" style="width:100%; height:100%"></div>
   </body>
 </html>

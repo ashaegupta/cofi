@@ -13,9 +13,14 @@ class CofiHandler(tornado.web.RequestHandler):
         term = self.get_argument("term", None)
         lat = self.get_argument("lat", None)
         lon = self.get_argument("lon", None)
-        print self.request.arguments
+        callback = self.get_argument("callback", None)
+        
         resp = search.do(term=term, lat=lat, lon=lon)
-        self.write(json.dumps(resp))
+        if callback:
+            resp_str = str(callback) + '(' + json.dumps(resp) + ');'
+            self.write(resp_str)
+        else:
+            self.write(resp)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):

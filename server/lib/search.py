@@ -8,13 +8,12 @@ import place
 from utils import APIResponse
 from utils import settings
 
-YELP_WIFI_CAFE_SEARCH_TERM ='wifi+cafe'
+YELP_WIFI_CAFE_SEARCH_TERM ='wifi+coffee+tea'
 YELP_ROOT_URL = 'http://api.yelp.com/v2/search?term='
 YELP_BUSINESSES_TERM = "businesses"
 
 FS_ROOT_URL = "https://api.foursquare.com/v2/venues/explore?"
 FS_CAFE_SEARCH_TERM = "&section=coffee"
-FS_SEARCH_RADIUS = "&radius=2000"
 DO_FS_SEARCH = False
 
 def do(term="", lat="", lon=""):
@@ -55,8 +54,8 @@ def yelp_make_url(term, lat, lon):
     return url
     
 def fs_make_url(lat, lon):
-    return FS_ROOT_URL + "&ll=" + lat + "," + lon + FS_CAFE_SEARCH_TERM + FS_SEARCH_RADIUS + "&client_id=" + settings.FS_CLIENT_ID + "&client_secret=" + settings.FS_CLIENT_SECRET + "&v=" + date.today().strftime("%Y%m%d")
-
+    return FS_ROOT_URL + "&ll=" + lat + "," + lon + FS_CAFE_SEARCH_TERM + "&client_id=" + settings.FS_CLIENT_ID + "&client_secret=" + settings.FS_CLIENT_SECRET + "&v=" + date.today().strftime("%Y%m%d")
+    
 def get_signed_url(url):
     consumer = oauth2.Consumer(settings.YELP_CONSUMER_KEY, settings.YELP_CONSUMER_SECRET)
     oauth_request = oauth2.Request('GET', url, {})
@@ -87,17 +86,16 @@ def yelp_parse_response(response):
     results["has_fs_results"] = False
     no_phone_count = 0
     places = response.get("businesses")
-    print len(places)
     try:
         for p in places:
-            results["data"].append(p)
+            results["data"].append(p);
     except:
         return APIResponse.YELP_API_INVALID_RESULTS
     return results
 
 def fs_parse_response(response, yelp_results):
     results = {}
-    results["body"] = []
+    results["data"] = {}
     results["has_ordered_results"] = True
     try:
         r = response["response"]
@@ -106,16 +104,17 @@ def fs_parse_response(response, yelp_results):
         items = groups["items"]
         for item in items:
             venue = item["venue"]
+            print venue
             try: 
                 phone = venue["contact"]["phone"]
-                if yelp_results["body"].has_key(phone):
-                    place = {}
-                    place[phone] = json.loads(yelp_results["body"][phone])
-                    tips = item["tips"]
-                    tips = tips[0]
-                    tip = tips["text"]
-                    place[phone]["tips"] = tip
-                    results["body"].append(place)
+                if yelp_results["data"].has_key(phone):
+                    #place = {}
+                    #place[phone] = json.loads(yelp_results["data"].get[phone])
+                    #tips = item["tips"]
+                    #tips = tips[0]
+                    #tip = tips["text"]
+                    #place[phone]["tips"] = tip
+                    results["data"][phone] = json.loads(yelp_results["data"].get(phone))
             except:
                 pass
     except:
