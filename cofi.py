@@ -1,3 +1,4 @@
+import os
 import re
 import tornado.httpserver
 import tornado.autoreload
@@ -7,7 +8,7 @@ import simplejson as json
 
 from lib import search
 
-class CofiHandler(tornado.web.RequestHandler):
+class CofiPlacesHandler(tornado.web.RequestHandler):
     # Search for places
     def get(self):
         term = self.get_argument("term", None)
@@ -22,17 +23,24 @@ class CofiHandler(tornado.web.RequestHandler):
         else:
             self.write(resp)
 
+class CofiHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("static/templates/cofi.html")
+    
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("This is the homepage")
 
 app_settings = {
-    'debug': True
+    'debug': True, # enables automatic reruning of this file when edited
+    'static_path': os.path.join(os.path.dirname(__file__), "static")
 }
 
+
 application = tornado.web.Application([
-    (r"/", MainHandler),                    # get() - homepage - link to app
-    (r"/cofi.*", CofiHandler)              # get() - places 
+    (r"/", MainHandler),
+    (r"/cofi.*", CofiHandler),                    
+    (r"/cofi/places.*", CofiPlacesHandler)              
     ],  
      **app_settings)
 

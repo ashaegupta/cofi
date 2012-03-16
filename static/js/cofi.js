@@ -1,5 +1,5 @@
 var map;
-var GET_search_url_root="http://localhost:80/cofi?"
+var GET_search_url_root="http://localhost:80/cofi/places?"
 var places = [];
 var maxPlaces = 15;
 
