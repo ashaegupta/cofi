@@ -86,11 +86,26 @@ function adjust_map_bounds() {
     }
 }
 
+
+// Driver methods. Start_cofi is the first method that runs to find location
+// If success, continue to get_and_map_places, else return an error.
+function start_cofi(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(get_and_map_places, no_position);
+    } else {
+        no_position('not supported');
+    }
+}
+
+function no_position(msg) {
+    alert(msg);
+}
+
 // Search and map (driver function)
-function get_and_map_places() {
+function get_and_map_places(position) {
     console.log("retrieving data...");
-    var lat = "40.724925";
-    var lon = "-73.9828847";
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
     initialize_current_location_on_map(lat, lon);
     var url = GET_search + "lat=" + lat + "&lon=" + lon + "&callback=handle_request";
     load_places_jspon_script(url);

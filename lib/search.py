@@ -104,7 +104,6 @@ def fs_parse_response(response, yelp_results):
         items = groups["items"]
         for item in items:
             venue = item["venue"]
-            print venue
             try: 
                 phone = venue["contact"]["phone"]
                 if yelp_results["data"].has_key(phone):

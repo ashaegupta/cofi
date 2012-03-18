@@ -1,5 +1,4 @@
 def new_place_dict_from_json(json):
-    print "MADE IT TO THIS METHOD" + p
     p = json
     p["food"] = None
     p["outlets"] = None
