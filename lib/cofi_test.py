@@ -20,5 +20,6 @@ resp
 
 ''''
 http://localhost:80/cofi/places?lat=40.724925&lon=-73.9828847
+http://splitmyri.de/cofi/places?lat=40.724925&lon=-73.9828847
 
 '''

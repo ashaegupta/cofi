@@ -5,6 +5,7 @@ import tornado.autoreload
 import tornado.ioloop
 import tornado.web
 import simplejson as json
+import logging
 
 from lib import search
 
@@ -38,7 +39,7 @@ settings = {
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/cofi.*", CofiHandler),                    
+    (r"/cofi", CofiHandler),                    
     (r"/cofi/places.*", CofiPlacesHandler)              
     ],  
      **settings)
@@ -46,7 +47,6 @@ application = tornado.web.Application([
 if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(80)
-    tornado.autoreload.start()
     tornado.ioloop.IOLoop.instance().start()
     
 
