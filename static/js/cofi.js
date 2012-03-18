@@ -1,7 +1,7 @@
 var map;
 var GET_search = "/cofi/places?"
 var places = [];
-var maxPlaces = 15;
+var maxPlaces = 20;
 
 // Map current location
 function initialize_current_location_on_map(lat, lon) {
@@ -35,11 +35,13 @@ function handle_request(response) {
 
 // Map places
 function map_places(places){
-    for (i=0; i<places.length && i< maxPlaces; i++) {
+    console.log(places);
+    for (var p in places) {
         console.log("mapping places...");
-        var lat = places[i].location.coordinate.latitude;
-        var lon = places[i].location.coordinate.longitude;
-        console.log(places[i].name);
+        console.log(p);
+        var lat = places[p].location.coordinate.latitude;
+        var lon = places[p].location.coordinate.longitude;
+        console.log(places[p].name);
         var loc = new google.maps.LatLng(lat,lon);
         add_marker(loc);
     }
@@ -62,9 +64,10 @@ function get_bounding_box_points() {
     var locLats = [];
     var locLongs = [];
     // loop through visible markers;
-    for (i=0; i<places.length && i< maxPlaces; i++) {
-        locLats.push(places[i].location.coordinate.latitude);
-        locLongs.push(places[i].location.coordinate.longitude);
+    for (var p in places) {
+    //for (i=0; i<places.length && i< maxPlaces; i++) {
+        locLats.push(places[p].location.coordinate.latitude);
+        locLongs.push(places[p].location.coordinate.longitude);
     }
     var points =  {
         'maxLat':Math.max.apply(null, locLats), 

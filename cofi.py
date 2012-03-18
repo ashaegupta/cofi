@@ -17,7 +17,10 @@ class CofiPlacesHandler(tornado.web.RequestHandler):
         lon = self.get_argument("lon", None)
         callback = self.get_argument("callback", None)
         
-        resp = search.do(term=term, lat=lat, lon=lon)
+        search_results = search.do(term=term, lat=lat, lon=lon, do_fs_search=True)
+        resp = {
+            'data': search_results
+        }
         if callback:
             resp_str = str(callback) + '(' + json.dumps(resp) + ');'
             self.write(resp_str)
@@ -45,6 +48,7 @@ application = tornado.web.Application([
      **settings)
 
 if __name__ == "__main__":
+    logging.getLogger().setLevel(logging.INFO)
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(80)
     tornado.ioloop.IOLoop.instance().start()
