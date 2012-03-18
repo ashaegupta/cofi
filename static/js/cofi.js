@@ -1,10 +1,10 @@
 var map;
-var GET_search_url_root="http://localhost:80/cofi/places?"
+var GET_search = "/cofi/places?"
 var places = [];
 var maxPlaces = 15;
 
 // Map current location
-function initialize(lat, lon) {
+function initialize_current_location_on_map(lat, lon) {
     var options = {
       center: new google.maps.LatLng(lat, lon),
       zoom: 15,
@@ -91,7 +91,7 @@ function get_and_map_places() {
     console.log("retrieving data...");
     var lat = "40.724925";
     var lon = "-73.9828847";
-    initialize(lat, lon);
-    url = GET_search_url_root + "lat=" + lat + "&lon=" + lon + "&callback=handle_request";
+    initialize_current_location_on_map(lat, lon);
+    var url = GET_search + "lat=" + lat + "&lon=" + lon + "&callback=handle_request";
     load_places_jspon_script(url);
 }
