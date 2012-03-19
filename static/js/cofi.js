@@ -74,7 +74,11 @@ function create_infowindow(marker, place) {
     infoHTML += "   </div>";
     infoHTML += place.name;
     infoHTML += "   <div style='font-size:13px'>";
-    infoHTML += place.display_phone.replace("+1-","");
+    infoHTML += "       <a href=callto:'";
+    infoHTML +=         place.display_phone;
+    infoHTML += "       '>";
+    infoHTML +=         place.display_phone.replace("+1-","");
+    infoHTML +=         "</a>";
     infoHTML += "   </div>";
     infoHTML += "   <div style='font-size:13px'>";
     infoHTML += "       <a href='";
