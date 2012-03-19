@@ -99,9 +99,12 @@ def get_response(url):
         
 def get_yelp_results(term, lat, lon):
     url = yelp_make_url(term, lat, lon)
+    logging.info(url)
     signed_url = get_signed_url(url)
+    logging.info(signed_url)
     response = get_response(signed_url)
     yelp_results = yelp_parse_response(response)
+    logging.info(pprint.pformat(yelp_results))
     return yelp_results
 
 def get_fs_results(lat, lon):
