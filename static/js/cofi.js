@@ -72,14 +72,14 @@ function create_infowindow(marker, place) {
     var phone = place.display_phone.replace("+1-","");
     infoHTML = "<div style='font-family: \"Lucida Sans Typewriter\", \"Lucida Console\", Monaco, \"Bitstream Vera Sans Mono\", monospace;'>";
     infoHTML += "   <div>";
+    infoHTML +=     place.name;
     infoHTML += "   </div>";
-    infoHTML += place.name;
-    infoHTML += "   <div style='font-size:13px'>";
+    infoHTML += "   <div style='font-size:13px;margin-top:10px'>";
     infoHTML += "       <a href=callto:" + phone + ">";
     infoHTML +=         phone;
     infoHTML +=         "</a>";
     infoHTML += "   </div>";
-    infoHTML += "   <div style='font-size:13px'>";
+    infoHTML += "   <div style='font-size:13px;margin-top:10px'>";
     infoHTML += "       <a href='";
     infoHTML += get_google_map_link(place.location.coordinate);
     infoHTML += "       '>Show directions</a>";
