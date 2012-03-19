@@ -1,7 +1,11 @@
 var map;
+var all_infowindows = [];
+
 var GET_search = "/cofi/places?"
 var places = [];
 var maxPlaces = 20;
+
+var current_position;
 
 // Map current location
 function initialize_current_location_on_map(lat, lon) {
@@ -43,7 +47,9 @@ function map_places(places){
         var lon = places[p].location.coordinate.longitude;
         console.log(places[p].name);
         var loc = new google.maps.LatLng(lat,lon);
-        add_marker(loc);
+        var marker = add_marker(loc);
+        infowindow = create_infowindow(marker, places[p]);
+        all_infowindows.push(infowindow);
     }
     new adjust_map_bounds();
 }
@@ -57,6 +63,39 @@ function add_marker(loc){
         // set icon
     };
     var marker = new google.maps.Marker(markerOptions);
+    return marker;
+}
+
+// Returns the HTML for an infowindow
+function create_infowindow(marker, place) {
+    console.log(place);
+    infoHTML = "<div class='infowindow'>";
+    infoHTML += "   <div class='infowindow_title'>";
+    infoHTML += "   </div>";
+    infoHTML += place.name;
+    infoHTML += "   <div class='infowindow_phone'>";
+    infoHTML += place.phone;
+    infoHTML += "   </div>";
+    infoHTML += "   <div class='infowindow_link'>";
+    infoHTML += "       <a href='";
+    infoHTML += get_google_map_link(place.location.coordinate);
+    infoHTML += "       '>Show directions</a>";
+    infoHTML += "   </div>";
+    infoHTML += "</div>";
+    var infowindow = new google.maps.InfoWindow({content: infoHTML, maxWidth: 120});
+    // add click listener on the marker, to show the infowindow
+    google.maps.event.addListener(marker, 'click', function() {
+        close_all_info_windows();
+        infowindow.open(map, marker);
+    });
+    return infowindow;
+}
+
+function close_all_info_windows() {
+    // goes through a global list of all infowindows and closes them
+    for (i=0; i<all_infowindows.length; i++) {
+        all_infowindows[i].close();
+    }
 }
 
 // Determine appropriate bounds for view
@@ -107,9 +146,18 @@ function no_position(msg) {
 // Search and map (driver function)
 function get_and_map_places(position) {
     console.log("retrieving data...");
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
+    current_position = position.coords;
+    var lat = current_position.latitude;
+    var lon = current_position.longitude;
     initialize_current_location_on_map(lat, lon);
     var url = GET_search + "lat=" + lat + "&lon=" + lon + "&callback=handle_request";
     load_places_jspon_script(url);
+}
+
+function get_google_map_link(place_position) {
+    var gurl = 'http://maps.google.com/maps?';
+    var saddr = 'saddr=' + current_position.latitude + "," + current_position.longitude;
+    var daddr = '&daddr=' + place_position.latitude + "," + place_position.longitude;
+    var mode = '&dirflg=w';
+    return gurl + saddr + daddr + mode;
 }
