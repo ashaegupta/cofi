@@ -6,10 +6,6 @@ from datetime import date
 import logging
 logging.getLogger().setLevel(logging.INFO)
 import pprint
-
-from gevent import monkey; monkey.patch_all()
-import gevent
-
 import place
 from utils import APIResponse
 from utils import settings
@@ -30,23 +26,36 @@ YELP_SORT_TERM = "&sort=" + str(YELP_SORT_BY_BEST_MATCHED)
 FS_ROOT_URL = "https://api.foursquare.com/v2/venues/explore?"
 FS_CAFE_SEARCH_TERM = "&section=coffee"
 
-def check_params(term, lat, lon):
+def do(term="", lat="", lon="", do_fs_search=True):
+    print "synchronous:"
+    start = time.time()
+    check = checkparams(term, lat, lon)
+    if check.has_key("error"):
+        return check
+    
+    # yelp search
+    yelp_results = get_yelp_results(term, lat, lon)
+    # this is technically incorrect.
+    # we should create a subclass of Exception called ApiMessage, and raise them
+    if yelp_results.has_key("error"):
+        return yelp_results
+        
+    if do_fs_search:
+        fs_results = get_fs_results(lat, lon)
+        results = merge_results(yelp_results, fs_results)
+    else:
+        results = yelp_results
+    
+    end = end = time.time()
+    print  'Completed in ', end - start," seconds."
+    return results
+
+
+def checkparams(term, lat, lon):
     if lat or lon:
         return APIResponse.API_SUFFICIENT_PARAMS
     else:
         return APIResponse.API_MISSING_PARAMS
-
-def fetch_asynchronously(urls):
-    jobs = [gevent.spawn(fetch, url) for url in urls]
-    gevent.joinall(jobs)
-    return jobs
-
-def make_urls(term, lat, lon):
-    urls = []
-    yelp_url = yelp_make_url(term=term, lat=lat, lon=lon)
-    urls.append(get_signed_url(yelp_url))
-    urls.append(fs_make_url(lat, lon))
-    return urls
 
 def yelp_make_url(term, lat, lon):
     if not term:
@@ -80,7 +89,7 @@ def get_signed_url(url):
     oauth_request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
     return oauth_request.to_url()
 
-def fetch(url):
+def get_response(url):
     try:
         conn = urllib2.urlopen(url, None)
         try:
@@ -128,9 +137,15 @@ def fs_parse_response(fs_api_response):
 def get_yelp_results(term, lat, lon):
     url = yelp_make_url(term, lat, lon)
     signed_url = get_signed_url(url)
-    response = fetch(signed_url)
+    response = get_response(signed_url)
     yelp_results = yelp_parse_response(response)
     return yelp_results
+
+def get_fs_results(lat, lon):
+    url = fs_make_url(lat, lon)
+    response = get_response(url)
+    fs_results = fs_parse_response(response)
+    return fs_results
 
 def merge_results(yelp_results, fs_results):
     merged_results = {}
@@ -157,38 +172,3 @@ def merge_results(yelp_results, fs_results):
                 merged_results[up]['tips'] = {'text':'get on foursquare'}
     
     return merged_results
-
-def merge(yelp_response, fs_response):
-    yelp_results = yelp_parse_response(yelp_response)
-    fs_results = fs_parse_response(fs_response)
-    return merge_results(yelp_results, fs_results)
-
-def do(term="", lat="", lon="", do_fs_search=True):
-    start = time.time()
-    check = check_params(term, lat, lon)
-    if check.has_key("error"):
-        return check
-
-    # yelp and fs search asynchronously
-    if do_fs_search:
-        urls = make_urls(term, lat, lon)
-        responses = fetch_asynchronously(urls)
-        for r in responses:
-            if r.value.has_key("error"):
-                return r.value
-        else:
-            if responses[0].value.has_key("businesses"):
-                yelp_response = responses[0].value
-                fs_response = responses[1].value
-            elif responses[1].value.has_key("businesses"):
-                yelp_response = responses[1].value
-                fs_response = responses[0].value
-            else:
-                return APIResponse.YELP_API_INVALID_RESULTS
-            results = merge(yelp_response, fs_response)
-
-    else:    
-    # yelp search only
-        results = get_yelp_results(term, lat, lon)
-
-    return results

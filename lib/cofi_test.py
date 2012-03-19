@@ -10,8 +10,11 @@ print r.content
 import requests
 import simplejson as json
 url_root = 'http://localhost:80/cofi/places?'
+
+import lib.search_async
 lat = "40.724925"
 lon = "-73.9828847"
+lib.search_async.do(lat=lat, lon=lon)
 url = url_root + "lat=" + lat + "&lon=" + lon
 
 r = requests.get(url)
