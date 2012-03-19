@@ -70,16 +70,16 @@ function add_marker(loc){
 function create_infowindow(marker, place) {
     console.log(place);
     var phone = place.display_phone.replace("+1-","");
-    infoHTML = "<div style='font-family: \"Lucida Sans Typewriter\", \"Lucida Console\", Monaco, \"Bitstream Vera Sans Mono\", monospace;'>";
-    infoHTML += "   <div>";
+    infoHTML = "<div style='font-family: \"Lucida Sans Typewriter\", Monaco, monospace; '>";
+    infoHTML += "   <div style='font-weight:bold;'>";
     infoHTML +=     place.name;
     infoHTML += "   </div>";
-    infoHTML += "   <div style='font-size:13px;margin-top:10px'>";
+    infoHTML += "   <div style='font-size:13px;margin-top:7px'>";
     infoHTML += "       <a href=callto:" + phone + ">";
     infoHTML +=         phone;
     infoHTML +=         "</a>";
     infoHTML += "   </div>";
-    infoHTML += "   <div style='font-size:13px;margin-top:10px'>";
+    infoHTML += "   <div style='font-size:13px;margin-top:7px'>";
     infoHTML += "       <a href='";
     infoHTML += get_google_map_link(place.location.coordinate);
     infoHTML += "       '>Show directions</a>";
