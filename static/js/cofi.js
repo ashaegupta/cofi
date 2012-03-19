@@ -69,15 +69,14 @@ function add_marker(loc){
 // Returns the HTML for an infowindow
 function create_infowindow(marker, place) {
     console.log(place);
+    var phone = place.display_phone.replace("+1-","");
     infoHTML = "<div style='font-family: \"Lucida Sans Typewriter\", \"Lucida Console\", Monaco, \"Bitstream Vera Sans Mono\", monospace;'>";
     infoHTML += "   <div>";
     infoHTML += "   </div>";
     infoHTML += place.name;
     infoHTML += "   <div style='font-size:13px'>";
-    infoHTML += "       <a href=callto:'";
-    infoHTML +=         place.display_phone;
-    infoHTML += "       '>";
-    infoHTML +=         place.display_phone.replace("+1-","");
+    infoHTML += "       <a href=callto:" + phone + ">";
+    infoHTML +=         phone;
     infoHTML +=         "</a>";
     infoHTML += "   </div>";
     infoHTML += "   <div style='font-size:13px'>";
