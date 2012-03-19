@@ -112,7 +112,7 @@ def get_fs_results(lat, lon):
     
 def yelp_parse_response(response):
     results = {}
-    places = response.get("businesses")
+    places = response.get("businesses") or {}
     try:
         for p in places:
             if "phone" in p:
