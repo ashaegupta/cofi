@@ -9,10 +9,10 @@ import pprint
 from utils import APIResponse
 from utils import settings
 
-YELP_WIFI_CAFE_SEARCH_TERM ='free+wifi+coffee+shop'
+YELP_WIFI_CAFE_SEARCH_TERM ='free+wifi+coffee+cafe'
 YELP_ROOT_URL = 'http://api.yelp.com/v2/search?term='
 YELP_BUSINESSES_TERM = "businesses"
-YELP_RADIUS_METERS = 200
+YELP_RADIUS_METERS = 500
 YELP_RADIUS_TERM = "&radius_filter=" + str(YELP_RADIUS_METERS)
 YELP_LIMIT_NUM = 20
 YELP_LIMIT_TERM = "&limit=" + str(YELP_LIMIT_NUM)

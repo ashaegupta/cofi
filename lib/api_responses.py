@@ -65,7 +65,7 @@ def merge(yelp_results, fs_results):
         for up in uncommon_yelp_phones:
             if len(merged_results) < REQUIRED_RESULTS:
                 merged_results[up] = yelp_results.get(up)
-                merged_results[up]['tips'] = {'text':'get on foursquare'}
+                merged_results[up]['tips'] = {'text':'No tips. This place needs to get on foursquare'}
     
     return merged_results
 
