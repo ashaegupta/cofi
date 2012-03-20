@@ -1,7 +1,7 @@
 var map;
 var all_infowindows = [];
 
-var GET_search = "/cofi/places?"
+var GET_search = "/places?"
 var places = [];
 var maxPlaces = 20;
 

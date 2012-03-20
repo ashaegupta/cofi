@@ -13,7 +13,7 @@ import logging
 from lib import api_search_urls
 from lib import api_responses
 
-class CofiPlacesHandler(tornado.web.RequestHandler):
+class PlacesHandler(tornado.web.RequestHandler):
     # Search for places, calls fs API and yelp API asynchronously
     @tornado.web.asynchronous
     def get(self):
@@ -24,7 +24,6 @@ class CofiPlacesHandler(tornado.web.RequestHandler):
         
         urls = api_search_urls.make(lat=lat, lon=lon)
         self.urls_length = len(urls)
-        print urls
         
         ### Prepare async client
         http = tornado.httpclient.AsyncHTTPClient()
@@ -65,14 +64,10 @@ class CofiPlacesHandler(tornado.web.RequestHandler):
                 self.write(resp)
                 self.finish()
 
-class CofiHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.render("static/templates/cofi.html")
-    
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.write("This is the homepage")
-
+        self.render("static/templates/cofi.html")
+        
 settings = {
     'debug': True, # enables automatic reruning of this file when edited
     'static_path': os.path.join(os.path.dirname(__file__), "static")
@@ -80,8 +75,7 @@ settings = {
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/cofi", CofiHandler),                    
-    (r"/cofi/places.*", CofiPlacesHandler)              
+    (r"/places.*", PlacesHandler)              
     ],  
      **settings)
 
