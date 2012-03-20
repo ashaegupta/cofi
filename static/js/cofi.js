@@ -143,8 +143,7 @@ function start_cofi(){
 }
 
 function no_position(msg) {
-    alert('Almost ready to brew. Please turn on Location Services for Safari.' +
-     'Go to Settings:Location Services and find Safari in the list.');
+    alert('Almost ready to brew. First turn on Location Services for Safari.');
 }
 
 // Search and map (driver function)
