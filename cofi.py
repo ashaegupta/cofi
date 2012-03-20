@@ -1,31 +1,69 @@
 import os
 import re
+import tornado
 import tornado.httpserver
 import tornado.autoreload
+import tornado.escape
+import tornado.httpclient
 import tornado.ioloop
 import tornado.web
 import simplejson as json
 import logging
 
-from lib import search
+from lib import api_search_urls
+from lib import api_responses
 
 class CofiPlacesHandler(tornado.web.RequestHandler):
-    # Search for places
+    # Search for places, calls fs API and yelp API asynchronously
+    @tornado.web.asynchronous
     def get(self):
-        term = self.get_argument("term", None)
+        self.responses = list()
+        self.urls_length = 0
         lat = self.get_argument("lat", None)
         lon = self.get_argument("lon", None)
-        callback = self.get_argument("callback", None)
         
-        search_results = search.do(term=term, lat=lat, lon=lon, do_fs_search=True)
-        resp = {
-            'data': search_results
-        }
-        if callback:
-            resp_str = str(callback) + '(' + json.dumps(resp) + ');'
-            self.write(resp_str)
-        else:
-            self.write(resp)
+        urls = api_search_urls.make(lat=lat, lon=lon)
+        self.urls_length = len(urls)
+        print urls
+        
+        ### Prepare async client
+        http = tornado.httpclient.AsyncHTTPClient()
+
+        ### Queue up page fetches
+        for url in urls:
+            http.fetch(url,
+                       callback=self.async_callback(self.on_response))
+
+    @tornado.web.asynchronous
+    def on_response(self, response):
+        """Callback for get handler. It collects all the responses and writes
+        to the client once every page fetch is complete.
+        """
+        client_callback = self.get_argument("callback", None)
+        
+        if response.error:
+            raise tornado.web.HTTPError(500)
+        
+        # Decode json, append response list
+        json_response = tornado.escape.json_decode(response.body)
+        self.responses.append(json_response)
+        
+        if len(self.responses) == self.urls_length: # All responses have been fetched
+            # Clean and merge results
+            merged = api_responses.clean(self.responses)
+            
+
+            # Format results and write
+            resp = {
+                'data': merged
+            }
+            if client_callback:
+                resp_str = str(client_callback) + '(' + json.dumps(resp) + ');'
+                self.write(resp_str)
+                self.finish()
+            else:
+                self.write(resp)
+                self.finish()
 
 class CofiHandler(tornado.web.RequestHandler):
     def get(self):
