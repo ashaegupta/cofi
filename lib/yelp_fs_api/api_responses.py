@@ -3,8 +3,8 @@ import logging
 logging.getLogger().setLevel(logging.INFO)
 import pprint
 
-import place
-from utils import APIResponse
+import api_responses_formatter
+from utils import ErrorResponse
 from utils import settings
 
 REQUIRED_RESULTS = 5
@@ -16,10 +16,10 @@ def yelp_parse_response(response):
         for p in places:
             if "phone" in p:
                 phone = p.get('phone')
-                results[phone] = p
+                results[phone] = api_responses_formatter.format_yelp_resp(p)
     except Exception, e:
         logging.info("Error parsing yelp response: %s" % e)
-        return APIResponse.YELP_API_INVALID_RESULTS
+        return ErrorResponse.YELP_API_INVALID_RESULTS
     return results
 
 def fs_parse_response(fs_api_response):
@@ -31,7 +31,7 @@ def fs_parse_response(fs_api_response):
         items = groups["items"]
     except Exception, e:
         logging.info("Error parsing fs response: %s" % e)
-        return APIResponse.FS_API_INVALID_RESULTS
+        return ErrorResponse.FS_API_INVALID_RESULTS
         
     for item in items:
         venue = item.get("venue")
@@ -83,7 +83,7 @@ def clean(responses):
                 yelp_response = responses[1]
                 fs_response = responses[0]
             else:
-                return APIResponse.YELP_API_INVALID_RESULTS
+                return ErrorResponse.YELP_API_INVALID_RESULTS
             
             # Parse the responses    
             yelp_results = yelp_parse_response(yelp_response)

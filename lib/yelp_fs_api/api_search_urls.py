@@ -6,7 +6,7 @@ import logging
 logging.getLogger().setLevel(logging.INFO)
 import pprint
 
-from utils import APIResponse
+from utils import ErrorResponse
 from utils import settings
 
 YELP_WIFI_CAFE_SEARCH_TERM ='free+wifi+coffee'
@@ -24,9 +24,9 @@ FS_CAFE_SEARCH_TERM = "&section=coffee"
 
 def check_params(lat, lon):
     if lat or lon:
-        return APIResponse.API_SUFFICIENT_PARAMS
+        return ErrorResponse.API_SUFFICIENT_PARAMS
     else:
-        return APIResponse.API_MISSING_PARAMS
+        return ErrorResponse.API_MISSING_PARAMS
 
 def yelp_make_url(lat, lon):
     url = (YELP_ROOT_URL +

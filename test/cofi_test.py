@@ -6,7 +6,6 @@ url = url_root + "lat=" + lat + "&lon=" + lon
 r = requests.get(url)
 print r.content
 
-
 import requests
 import simplejson as json
 url_root = 'http://localhost:80/cofi/places?'

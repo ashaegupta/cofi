@@ -10,8 +10,8 @@ import tornado.web
 import simplejson as json
 import logging
 
-from lib import api_search_urls
-from lib import api_responses
+from lib.yelp_fs_api import api_search_urls
+from lib.yelp_fs_api import api_responses
 
 class PlacesHandler(tornado.web.RequestHandler):
     # Search for places, calls fs API and yelp API asynchronously
@@ -51,7 +51,6 @@ class PlacesHandler(tornado.web.RequestHandler):
             # Clean and merge results
             merged = api_responses.clean(self.responses)
             
-
             # Format results and write
             resp = {
                 'data': merged

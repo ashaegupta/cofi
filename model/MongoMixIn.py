@@ -141,7 +141,13 @@ class MongoMixIn(object):
         return klass.list_from_cursor(docs)
 
     @classmethod
-    def create_or_update_by_user_id(klass, user_id, doc, upsert=True):
+    def find_by_place_id(klass, place_id):
+      spec = {klass.A_PLACE_ID:int(place_id)}
+      cursor = klass.mdbc().find(spec)
+      return klass.dict_from_cursor(cursor=cursor, key=klass.A_PLACE_ID, remove_object_id=True)
+      
+    @classmethod
+    def update_place(klass, doc, upsert=True):
         if '_id' in doc:
             del doc['_id']
         spec = {klass.A_USER_ID:int(user_id)}
@@ -151,6 +157,7 @@ class MongoMixIn(object):
         except Exception, e:
             logging.error("[%s.create_or_update_by_user_id] Error: %s" % (klass.klass_name, e))
             return False
+
 
     @classmethod
     def find_and_modify(klass, spec, doc, new=True):
