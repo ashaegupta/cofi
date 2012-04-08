@@ -60,89 +60,89 @@ class Place(MongoMixIn.MongoMixIn):
     
     @classmethod
     def review_place(klass, place_id, review=None):
-      """review a place that exists in the database.
-      place_id is the cofi id, different from fs or yelp.
-      """
-      if not review:
-        return None
-      
-      # process the review  
-      doc = klass.process_review(review)
-      
-      # update timestamp
-      if '$set' not in doc:
-        doc['$set'] = {}
-      
-      doc["$set"][klass.A_UPDATED_TS] = int(time.time())
-    
-      # update the database
-      return klass.update(place_id=place_id, doc=doc)
+        """review a place that exists in the database.
+        place_id is the cofi id, different from fs or yelp.
+        """
+        if not review:
+            return None
+        
+        # process the review  
+        doc = klass.process_review(review)
+        
+        # update timestamp
+        if '$set' not in doc:
+            doc['$set'] = {}
+        
+        doc["$set"][klass.A_UPDATED_TS] = int(time.time())
+        
+        # update the database
+        return klass.update(place_id=place_id, doc=doc)
     
     @classmethod
     def add_place(klass, place_data, review):
-      """add a new place and one review to the database
-      """
-      doc = {}
-
-      place_id = uuid.uuid4().hex
-      set_doc = {
-          klass.A_PLACE_ID: place_id,
-          klass.A_CREATED_TS: int(time.time()),
-          klass.A_UPDATED_TS: int(time.time())
-      }
-      set_doc.update(place_data)
-      doc["$set"] = set_doc
-      
-      # process the review if it exists
-      if review:
-          review_doc = klass.process_review(review)
-          doc.update(review_doc)
-      
-      # update the database
-      return klass.update(place_id=place_id, doc=doc)
+        """add a new place and one review to the database
+        """
+        doc = {}
+        
+        place_id = uuid.uuid4().hex
+        set_doc = {
+            klass.A_PLACE_ID: place_id,
+            klass.A_CREATED_TS: int(time.time()),
+            klass.A_UPDATED_TS: int(time.time())
+        }
+        set_doc.update(place_data)
+        doc["$set"] = set_doc
+        
+        # process the review if it exists
+        if review:
+            review_doc = klass.process_review(review)
+            doc.update(review_doc)
+        
+        # update the database
+        return klass.update(place_id=place_id, doc=doc)
     
     
     # Helper method to process incoming review and update recommendation data
     @classmethod
     def process_review(klass, review):
-      review_doc = {}
-      
-      # add timestamp for review
-      review[klass.A_CREATED_REVIEW_TS] = int(time.time())
-    
-      # add review to list
-      review_doc["$push"] = {klass.A_ALL_REVIEWS:review}
-      
-      # for each attribute, value in the review, increment value count in reco data
-      inc_doc = {}
-      for attribute, value in review.iteritems():
-        if klass.value_is_valid_reco_dict_key(value):
-          value_path = klass.A_RECOS + "." + attribute + "." + value 
-          count_path = klass.A_RECOS + "." + attribute + "." + klass.A_COUNT
-          inc_doc[value_path] = 1
-          inc_doc[count_path] = 1
-          
-      if inc_doc:
-        review_doc["$inc"] = inc_doc
+        review_doc = {}
         
-      return review_doc
+        # add timestamp for review
+        review[klass.A_CREATED_REVIEW_TS] = int(time.time())
+        
+        # add review to list
+        review_doc["$push"] = {klass.A_ALL_REVIEWS:review}
+        
+        # for each attribute, value in the review, increment value count in reco data
+        inc_doc = {}
+        for attribute, value in review.iteritems():
+            if klass.value_is_valid_reco_dict_key(value):
+                value_path = klass.A_RECOS + "." + attribute + "." + value 
+                count_path = klass.A_RECOS + "." + attribute + "." + klass.A_COUNT
+                inc_doc[value_path] = 1
+                inc_doc[count_path] = 1
+              
+        if inc_doc:
+            review_doc["$inc"] = inc_doc
+          
+        return review_doc
     
     
     # Ensure value is a valid key in the recommendation dictionary
     @classmethod  
     def value_is_valid_reco_dict_key(klass, value=None):
-      if value in [klass.A_HIGH, klass.A_MED, klass.A_LOW]:
-          return True
-      else:
-          return False
+        if value in [klass.A_HIGH, klass.A_MED, klass.A_LOW]:
+            return True
+        else:
+            return False
     
     # Update the database for a given place_id
     @classmethod
     def update(klass, place_id, doc):
-      spec = {klass.A_PLACE_ID:place_id}
-      try:
-        klass.mdbc().update(spec=spec, document=doc, upsert=True, safe=True)
-      except Exception, e:
-        logging.error("COULD NOT UPSERT document in model.Place Exception: %s" % e.message)
-        return False
-      return place_id
+        spec = {klass.A_PLACE_ID:place_id}
+        try:
+            klass.mdbc().update(spec=spec, document=doc, upsert=True, safe=True)
+        except Exception, e:
+            logging.error("COULD NOT UPSERT document in model.Place Exception: %s" % e.message)
+            return False
+        return spec

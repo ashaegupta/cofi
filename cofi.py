@@ -10,14 +10,17 @@ import tornado.web
 import simplejson as json
 import logging
 
-from lib.yelp_fs_api import api_search_urls
-from lib.yelp_fs_api import api_responses
+from lib.yelp_fs_api import api_search_urls, api_responses
+from lib import place_handler
+from model.Place import Place
 
 class PlacesHandler(tornado.web.RequestHandler):
-    # Search for places, calls fs API and yelp API asynchronously
+    
     @tornado.web.asynchronous
     def get(self):
-        self.responses = list()
+        ''' Search for places, calls fs API and yelp API asynchronously
+        '''
+        self.responses = []
         self.urls_length = 0
         lat = self.get_argument("lat", None)
         lon = self.get_argument("lon", None)
@@ -62,6 +65,50 @@ class PlacesHandler(tornado.web.RequestHandler):
             else:
                 self.write(resp)
                 self.finish()
+    
+    def post(self):
+        ''' Add a new place or review a place depending on whether place_id is passed
+        '''
+        request_keys = self.request.arguments.keys()
+        # review an existing place if place_id exists
+        if Place.A_PLACE_ID in request_keys:
+            resp = self.post_review()
+        
+        # add a new place if place_id does not exist but either yelp_id or fs_id exists
+        elif Place.A_FS_ID in request_keys or Place.A_YELP_ID in request_keys:
+            resp = self.post_place()
+            
+        else:
+            resp = {'Error': 'Could not complete post'}
+        
+        self.write(resp)
+        self.finish()
+    
+    def post_review(self):
+        place_id = self.get_argument(Place.A_PLACE_ID, None)
+        wifi = self.get_argument(Place.A_WIFI, None)
+        plugs = self.get_argument(Place.A_PLUGS, None)
+        exp = self.get_argument(Place.A_EXP, None)
+        
+        return place_handler.review_place(place_id=place_id, wifi=wifi, plugs=plugs, exp=exp)
+      
+    def post_place(self):
+        fs_id = self.get_argument(Place.A_FS_ID, None)
+        yelp_id = self.get_argument(Place.A_YELP_ID, None)
+        name = self.get_argument(Place.A_NAME, None)
+        phone = self.get_argument(Place.A_PHONE, None)
+        lat = self.get_argument(Place.A_LAT, None)
+        lon = self.get_argument(Place.A_LON, None)
+        address = self.get_argument(Place.A_ADDRESS, None)
+        wifi = self.get_argument(Place.A_WIFI, None)
+        plugs = self.get_argument(Place.A_PLUGS, None)
+        exp = self.get_argument(Place.A_EXP, None)
+        
+        resp =  place_handler.add_place(fs_id=fs_id, yelp_id=yelp_id, name=name, phone=phone,
+                                        lat=lat, lon=lon, address=address,
+                                        wifi=wifi, plugs=plugs, exp=exp)
+        return resp
+  
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -74,7 +121,7 @@ settings = {
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/places.*", PlacesHandler)              
+    (r"/places.*", PlacesHandler)
     ],  
      **settings)
 

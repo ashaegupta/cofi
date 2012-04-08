@@ -2,12 +2,13 @@ cofi.py notes
 =============
 
 ## features to add
-- format yelp API responses to match database responses
+- format yelp API responses to match database responses; add yelp rating
 - add GET handlers to cofi.py; integrate responses from database and APIs
-- add POST handlers to cofi.py
 - write find method in Place.py
+
 
 ## fixes
 - when creating a mongo update doc across multiple methods, make sure you don't overwrite keys created in one method in another, e.g. '$set' in Place.add_place
 - use docstrings for each method instead of comments above
 - raise exceptions instead of returning an error dictionary. use try/except clauses to catch exceptions and process them into json for returning
+- import necessary functions from MongoMixin; get rid of class structure in Place
