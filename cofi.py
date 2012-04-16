@@ -10,7 +10,7 @@ import tornado.web
 import simplejson as json
 import logging
 
-from lib.yelp_fs_api import api_search_urls, api_responses
+from lib.yelp_fs_api import make_api_search_urls, process_and_merge_api_resp
 from lib import place_handler
 from model.Place import Place
 
@@ -25,8 +25,11 @@ class PlacesHandler(tornado.web.RequestHandler):
         lat = self.get_argument("lat", None)
         lon = self.get_argument("lon", None)
         
-        urls = api_search_urls.make(lat=lat, lon=lon)
+        logging.info('Getting urls...')
+        urls = make_api_search_urls.make(lat=lat, lon=lon)
         self.urls_length = len(urls)
+        
+        logging.info(urls)
         
         ### Prepare async client
         http = tornado.httpclient.AsyncHTTPClient()
@@ -52,11 +55,11 @@ class PlacesHandler(tornado.web.RequestHandler):
         
         if len(self.responses) == self.urls_length: # All responses have been fetched
             # Clean and merge results
-            merged = api_responses.clean(self.responses)
+            merged = process_and_merge_api_resp.process(self.responses)
             
             # Format results and write
             resp = {
-                'data': merged
+                'places': merged
             }
             if client_callback:
                 resp_str = str(client_callback) + '(' + json.dumps(resp) + ');'

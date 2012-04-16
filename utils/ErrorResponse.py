@@ -34,3 +34,8 @@ POST_INVALID_ARGS_LOC_DATA = {
     'error':1,
     'message':'Does not have sufficient place data',
 }
+
+GET_INVALID_ARGS = {
+    'error':1,
+    'message':'Insufficient args'
+}

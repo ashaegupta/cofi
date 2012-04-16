@@ -1,13 +1,31 @@
 cofi.py notes
 =============
 
-## features to add
-- format yelp API responses to match database responses; add yelp rating
-- add GET handlers to cofi.py; integrate responses from database and APIs
-- write find method in Place.py
+## ADDING A PLACE 
+1. Add buttons to google map page (plus sign) -- DONE
+2. Add place page 4 inputs
+    - get FS place place
+    - wifi, plugs, exp options
+    - "Add" button
+3. FS get a place from a lat/lon combo
+    - store the place_id, lat/lon, address
+    - change the save place method to compute fs data.
+4. AJAX call to add a place
+5. Edit server response to have success
+5. Return user to the map page
+
+## REVIEWING A PLACE
+1. Add button to place name
+2. Create place page with 3 inputs
+    - wifi, plugs, exp options
+    - "Review Place" button
+3. AJAX call to add a place
+4. Edit server response to have success
+5. Return user to the map page
 
 
-## fixes
+## Nice to have
+- add comments
 - when creating a mongo update doc across multiple methods, make sure you don't overwrite keys created in one method in another, e.g. '$set' in Place.add_place
 - use docstrings for each method instead of comments above
 - raise exceptions instead of returning an error dictionary. use try/except clauses to catch exceptions and process them into json for returning

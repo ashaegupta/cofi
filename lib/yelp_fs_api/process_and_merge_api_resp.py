@@ -3,7 +3,7 @@ import logging
 logging.getLogger().setLevel(logging.INFO)
 import pprint
 
-import api_responses_formatter
+import format_api_resp
 from utils import ErrorResponse
 from utils import settings
 
@@ -16,7 +16,7 @@ def yelp_parse_response(response):
         for p in places:
             if "phone" in p:
                 phone = p.get('phone')
-                results[phone] = api_responses_formatter.format_yelp_resp(p)
+                results[phone] = format_api_resp.yelp(p)
     except Exception, e:
         logging.info("Error parsing yelp response: %s" % e)
         return ErrorResponse.YELP_API_INVALID_RESULTS
@@ -39,12 +39,12 @@ def fs_parse_response(fs_api_response):
             continue
         phone = venue["contact"]["phone"]
         results[phone] = venue
-        results[phone]['tips'] = item.get('tips', {})
+        #results[phone]['tips'] = item.get('tips', {})
     
     return results
 
 def merge(yelp_results, fs_results):
-    merged_results = {}
+    merged_results = []
         
     # both result sets have keys that are phone numbers
     yelp_phones = set(yelp_results.keys())
@@ -57,19 +57,21 @@ def merge(yelp_results, fs_results):
     
     for cp in common_phones:
         if len(merged_results) < REQUIRED_RESULTS:
-            merged_results[cp] = yelp_results.get(cp)
-            fs_tips = fs_results.get(cp).get('tips')
-            merged_results[cp]['tips'] = fs_tips
+            cp_place_data = yelp_results.get(cp)
+            merged_results.append(cp_place_data)
+            # fs_tips = fs_results.get(cp).get('tips')
+            # merged_results[cp]['tips'] = fs_tips
     
     if uncommon_result_req and uncommon_yelp_phones:
         for up in uncommon_yelp_phones:
             if len(merged_results) < REQUIRED_RESULTS:
-                merged_results[up] = yelp_results.get(up)
-                merged_results[up]['tips'] = {'text':'No tips. This place needs to get on foursquare'}
+                up_place_data = yelp_results.get(up)
+                merged_results.append(up_place_data)
+                # merged_results[up]['tips'] = {'text':'No tips. This place needs to get on foursquare'}
     
     return merged_results
 
-def clean(responses):
+def process(responses):
     for r in responses:
         if r.has_key("error"):
             return r
