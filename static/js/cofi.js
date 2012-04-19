@@ -1,37 +1,39 @@
 var map;
 var all_infowindows = [];
 
-var GET_search = "/places?"
+var GET_cofi_places = "/places?"
+var GET_fs_search = "/fs?"
 var places = [];
 var maxPlaces = 20;
 
 var current_lat;
 var current_lon;
-var chicago = new google.maps.LatLng(41.850033, -87.6500523);
 
-/******************************** -- Map -- **************************************/
+/******************************** Create Map **************************************/
 
 // Map current location
 function initialize_current_location_on_map(lat, lon) {
     var options = {
       center: new google.maps.LatLng(lat, lon),
       zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),
         options);
     
+    /**
+    // Necessary to create the div first or can create and return in the RefreshControl function?
     var refreshControlDiv = document.createElement('div');
-    var refreshControl = new RefreshControl(refreshControlDiv, map);
+    var refreshControl = new refresh_control(refreshControlDiv, map);
     refreshControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_RIGHT].push(refreshControlDiv);
     
     var addControlDiv = document.createElement('div');
-    var addControl = new AddControl(addControlDiv, map);
+    var addControl = new add_control(addControlDiv, map);
     addControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(addControlDiv);
-    
+    */
 
 }
 
@@ -172,10 +174,19 @@ function get_and_map_places(position) {
     current_lat = current_position.latitude;
     current_lon = current_position.longitude;
     initialize_current_location_on_map(current_lat, current_lon);
-    var url = GET_search + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
+    var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
     load_places_jspon_script(url);
 }
 
+// Refresh the map once the user has moved it
+function refresh() {
+    current_lat = map.getCenter().lat();
+    current_lon = map.getCenter().lng();
+    var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
+    load_places_jspon_script(url);
+}
+
+// Make google map link for a given position
 function get_google_map_link(place_position) {
     var gurl = 'http://maps.google.com/maps?';
     var saddr = 'saddr=' + current_lat + "," + current_lon;
@@ -184,83 +195,105 @@ function get_google_map_link(place_position) {
     return gurl + saddr + daddr + mode;
 }
 
+// Format the phone to xxx-xxx-xxxx
 function format_phone(phone){
     return phone.substring(0,3) + "-" + phone.substring(3,6) + "-" + phone.substring(6);
 }
 
-function RefreshControl(controlDiv, map) {
+/**
+// Create a refresh button for the maps page
+function refresh_control(controlDiv, map) {
 
     controlDiv.style.padding = '5px';
-    
-    // Set CSS for the control border
+
+    /// Set CSS for the control border
     var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = 'pink';
-    controlUI.style.borderStyle = 'solid';
-    controlUI.style.padding = '5px';
-    controlUI.style.borderWidth = '2px';
-    controlUI.style.cursor = 'pointer';
-    controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to refresh the map';
+    controlUI.className = 'map_button';
+    controlUI.title = 'Refresh the map';
     controlDiv.appendChild(controlUI);
-    
+
     // Set CSS for the control interior
     var controlText = document.createElement('div');
-    controlText.style.fontFamily = 'Arial,sans-serif';
-    controlText.style.fontSize = '14px';
-    controlText.style.paddingLeft = '4px';
-    controlText.style.paddingRight = '4px';
+    controlText.className = 'map_button_text';
     controlText.innerHTML = '<b>Refresh</b>';
     controlUI.appendChild(controlText);
-    
-    // Setup the click event listeners: simply set the map to
-    // Chicago
+   
     google.maps.event.addDomListener(controlUI, 'click', function() {
       current_lat = map.getCenter().lat();
       current_lon = map.getCenter().lng();
-      var url = GET_search + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
-      load_places_jspon_script(url);
+      var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
+      //load_places_jspon_script(url);
     });
-    
+
 }
 
-function AddControl(controlDiv, map) {
+// Create an add button for the maps page
+function add_control(controlDiv, map) {
 
     controlDiv.style.padding = '5px';
     
-    // Set CSS for the control border
+    /// Set CSS for the control border
     var controlUI = document.createElement('div');
-    controlUI.style.backgroundColor = 'pink';
-    controlUI.style.borderStyle = 'solid';
-    controlUI.style.padding = '5px';
-    controlUI.style.borderWidth = '2px';
-    controlUI.style.cursor = 'pointer';
-    controlUI.style.textAlign = 'center';
-    controlUI.title = 'Click to refresh the map';
+    controlUI.className = 'map_button';
+    controlUI.title = 'Add a place';
     controlDiv.appendChild(controlUI);
-    
+
     // Set CSS for the control interior
     var controlText = document.createElement('div');
-    controlText.style.fontFamily = 'Arial,sans-serif';
-    controlText.style.fontSize = '14px';
-    controlText.style.paddingLeft = '4px';
-    controlText.style.paddingRight = '4px';
+    controlText.className = 'map_button_text';
     controlText.innerHTML = '<b>+</b>';
     controlUI.appendChild(controlText);
     
     google.maps.event.addDomListener(controlUI, 'click', function() {
-      map.setCenter(chicago)
+      fs_search();
+      //set_visibility('add_place', 'block');
     });
     
 }
 
+// Set visibility of a doc
+function set_visibility(id, visibility) {
+    document.getElementById(id).style.display = visibility;
+}
+
+*/
 
 
-/******************************** -- Place Page -- **************************************/
+/******************************** Add Place **************************************/
 
-// get the wifi, exp and plugs data if it exists
-// set to this
-
-
+// Find nearby places
+function fs_search(query) {
+    
+    data = {
+        "lat":current_lat,
+        "lon":current_lon
+    };
+    
+    if (query) {
+        data["query"]=query;
+    }
+    
+    $.get(GET_fs_search, data, function(resp) {
+        var json = jQuery.parseJSON(resp);
+        console.log("Response JSON: ", json);
+        var fs_list_div = document.getElementById('fs_list')
+        fs_list_div.style.display = 'block';
+        var fs_list_div_data = document.getElementById('fs_list_data')
+        fs_list_div_data.innerHTML = json.response.venues[0].name;
+    })
+    
+    /*
+    $.ajax({
+        type: "GET",
+        url: fs_url,
+        async:false,
+        success: function(data){
+            var fs_list_div = document.getElementById('fs_list')
+            fs_list_div.style.display = 'block';
+            fs_list_div.innerHTML = data.response.responseText;
+      }
+    });*/
+}
 
 
 

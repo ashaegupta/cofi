@@ -1,8 +1,29 @@
+@import "jquerymobile.css";
+
 html { height: 100% }
 body { height: 100%; margin: 0; padding: 0 }
+form {font-family: Courier, sans-serif;}
 #map_canvas { height: 100% }
-
-.infowindow {}
-.infowindow_title {}
-.infowindow_phone {}
-.infowindow_link {}
+a { color:black;}
+.map_button {
+  background-color: white;
+  border-style: solid;
+  padding: 5px;
+  border-width: 2px;
+  cursor: pointer;
+  text-align: center;
+}
+.map_button_text {
+  font-family: Courier, sans-serif;
+  font-size: 14px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.full_page {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:white; 
+}

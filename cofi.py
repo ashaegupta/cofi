@@ -111,7 +111,24 @@ class PlacesHandler(tornado.web.RequestHandler):
                                         lat=lat, lon=lon, address=address,
                                         wifi=wifi, plugs=plugs, exp=exp)
         return resp
-  
+
+class FoursquareHandler(tornado.web.RequestHandler):
+    
+    def get(self):
+        lat = self.get_argument("lat", None)
+        lon = self.get_argument("lon", None)
+        query = self.get_argument("query", "")
+
+        fs_url = make_api_search_urls.fs_make_search_url(lat=lat, lon=lon, query=query)
+
+        http = tornado.httpclient.HTTPClient()
+        response = http.fetch(fs_url)
+        resp = response.body
+        
+        logging.info(resp)
+        logging.info(type(resp))
+        self.write(resp)
+        self.finish()
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -124,7 +141,8 @@ settings = {
 
 application = tornado.web.Application([
     (r"/", MainHandler),
-    (r"/places.*", PlacesHandler)
+    (r"/places.*", PlacesHandler),
+    (r"/fs.*", FoursquareHandler)
     ],  
      **settings)
 

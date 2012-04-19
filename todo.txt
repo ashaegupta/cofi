@@ -9,10 +9,13 @@ cofi.py notes
     - "Add" button
 3. FS get a place from a lat/lon combo
     - store the place_id, lat/lon, address
-    - change the save place method to compute fs data.
+    - process and parse returned data
+4. FS method to get a place based on a query
+    - store the place_id, lat/lon, address
+    - process and parse returned data    
 4. AJAX call to add a place
 5. Edit server response to have success
-5. Return user to the map page
+6. Return user to the map page
 
 ## REVIEWING A PLACE
 1. Add button to place name
@@ -25,6 +28,7 @@ cofi.py notes
 
 
 ## Nice to have
+- make the content fullscreen according to size of device
 - add comments
 - when creating a mongo update doc across multiple methods, make sure you don't overwrite keys created in one method in another, e.g. '$set' in Place.add_place
 - use docstrings for each method instead of comments above
