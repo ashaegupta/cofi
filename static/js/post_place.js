@@ -35,7 +35,7 @@ Add a place:
 var wifi;
 var plugs;
 var exp;
-
+    
 // Submit a place
 $("save").click(function(){
   $.ajax({

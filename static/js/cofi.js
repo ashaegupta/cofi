@@ -262,39 +262,40 @@ function set_visibility(id, visibility) {
 /******************************** Add Place **************************************/
 
 // Find nearby places
-function fs_search(query) {
-    
+function fs_search() {
+    var query = $("#fs_list").prev('form[role="search"]').find('input[data-type="search"]').val();
     data = {
         "lat":current_lat,
         "lon":current_lon
     };
-    
     if (query) {
-        data["query"]=query;
+        data["query"]=encodeURIComponent(query);
     }
-    
     $.get(GET_fs_search, data, function(resp) {
         var json = jQuery.parseJSON(resp);
         console.log("Response JSON: ", json);
-        var fs_list_div = document.getElementById('fs_list')
-        fs_list_div.style.display = 'block';
-        var fs_list_div_data = document.getElementById('fs_list_data')
-        fs_list_div_data.innerHTML = json.response.venues[0].name;
+        //var fs_list_div_data = document.getElementById('fs_list_data')
+        //fs_list_div_data.innerHTML = json.response.venues[0].name;
+        var venues = json.response.venues;
+        document.getElementById("fs_list").innerHTML = create_fs_list_html(venues);
     })
-    
-    /*
-    $.ajax({
-        type: "GET",
-        url: fs_url,
-        async:false,
-        success: function(data){
-            var fs_list_div = document.getElementById('fs_list')
-            fs_list_div.style.display = 'block';
-            fs_list_div.innerHTML = data.response.responseText;
-      }
-    });*/
+}
+
+// Returns the HTML for a fs_list
+function create_fs_list_html(venues) {
+    var fs_list_html = ""
+    for (i=0; i<venues.length; i++) {
+        var v = venues[i].name;
+        fs_list_html += "<li><a href=\"#review\""; 
+        fs_list_html += " onclick=\"review('" + v + "'); return false\">";
+        fs_list_html += v + "</a></li>";
+    }
+    console.log("fs_list_html " + fs_list_html);
+    return fs_list_html;
 }
 
 
-
-
+// Prepares the form
+function review(place){
+    document.getElementById("review_header").innerHTML = "review " + place;
+}
