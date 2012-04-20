@@ -32,9 +32,10 @@ cofi.py notes
 ## ICONS TO DEMO DATA
 
 ## Nice to have
+- clean up local storage data 
 - remove the extra zoom - DONE
 - square buttons - DONE
-- use bounding box instead of center method
+- show address with place name in fs_list
 - add comments
 - when creating a mongo update doc across multiple methods, make sure you don't overwrite keys created in one method in another, e.g. '$set' in Place.add_place
 - use docstrings for each method instead of comments above
