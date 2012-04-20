@@ -7,15 +7,15 @@ cofi.py notes
     - get FS place place
     - wifi, plugs, exp options
     - "Add" button
-3. FS get a place from a lat/lon combo
+3. FS get a place from a lat/lon combo - DONE
     - store the place_id, lat/lon, address
     - process and parse returned data
-4. FS method to get a place based on a query
+4. FS method to get a place based on a query - DONE
     - store the place_id, lat/lon, address
     - process and parse returned data    
 4. AJAX call to add a place
 5. Edit server response to have success
-6. Return user to the map page
+6. Return user to the map page - DONE
 
 ## REVIEWING A PLACE
 1. Add button to place name
@@ -26,9 +26,15 @@ cofi.py notes
 4. Edit server response to have success
 5. Return user to the map page
 
+## CACHING DATA
+
+
+## ICONS TO DEMO DATA
 
 ## Nice to have
-- make the content fullscreen according to size of device
+- remove the extra zoom - DONE
+- square buttons - DONE
+- use bounding box instead of center method
 - add comments
 - when creating a mongo update doc across multiple methods, make sure you don't overwrite keys created in one method in another, e.g. '$set' in Place.add_place
 - use docstrings for each method instead of comments above

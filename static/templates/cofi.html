@@ -22,9 +22,9 @@
   <body onload="start_cofi()">
       <!--Map-->
       <div data-role="page" data-theme="b" id="map" class="map_page">
-          <div data-role="header" data-position="inline">
+          <div data-role="header" data-position="inline" data-mini="true">
             	<a href="#add" data-role="button" data-mini="true"
-            	data-inline="true" class="ui-btn-right" data-theme="c" data-transition="slide" onclick="fs_search(); return false">+</a>
+            	data-inline="true" class="ui-btn-right" data-theme="c" data-transition="flip" onclick="fs_search(); return false">+</a>
             	<h1>cofi</h1>
             	<a href="#" data-role="button" data-mini="true" id="refresh" onclick="refresh(); return false"
             	data-inline="true" class="ui-btn-left" data-theme="c">refresh</a>            	
@@ -36,16 +36,17 @@
       
       <!--Add Place-->
       <div data-role="page" id="add" data-theme="b">
-          <div data-role="header" data-position="inline" data-fixed="true" data-fullscreen="true">
-              <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-theme="c" data-transition="slide"
-              data-direction="reverse" onclick="refresh(); return false">map</a>
-          	  <h1>add place</h1>
-          	  <a href="#" data-role="button" data-inline="true" class="ui-btn-right" data-theme="c" data-transition="slide"
-        	  onclick="fs_search(); return false">search</a>
+          <div data-role="header" data-position="fixed" data-fixed="true" data-fullscreen="true">
+              <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-theme="c" data-transition="flip"
+              data-direction="reverse" data-mini="true" onclick="refresh(); return false">map</a>
+          	  <h1>Add a place</h1>
+          	  <a href="#" data-role="button" data-mini="true" data-inline="true" class="ui-btn-right" data-theme="c" 
+          	        data-transition="slide" onclick="fs_search(); return false">search</a>
           </div>
 
           <div data-role="content">
-              <ul data-role="listview" id="fs_list" data-inset="true" data-filter="true" data-filter-placeholder="" data-theme="c">
+              <ul data-role="listview" id="fs_list" data-inset="true" data-filter="true" data-filter-placeholder="e.g. The Ace Hotel"
+                    data-theme="c">
               </ul>
           </div>
       </div>
@@ -53,8 +54,8 @@
       <!--Review Place-->
        <div data-role="page" id="review" data-theme="b">
            <div data-role="header" data-position="inline" data-fixed="true">
-               <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-theme="c" data-transition="slide"
-               data-direction="reverse" onclick="refresh(); return false">map</a>
+               <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-mini="true" data-theme="c"
+                    data-transition="slide" data-direction="reverse" onclick="refresh(); return false">map</a>
            	  <h1 id="review_header"></h1>
            </div>
                 

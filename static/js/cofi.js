@@ -16,7 +16,7 @@ function initialize_current_location_on_map(lat, lon) {
     var options = {
       center: new google.maps.LatLng(lat, lon),
       zoom: 15,
-      disableDefaultUI: true,
+      disableDefaultUI: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -56,7 +56,7 @@ function map_places(places){
         infowindow = create_infowindow(marker, places[p]);
         all_infowindows.push(infowindow);
     }
-    new adjust_map_bounds();
+    //adjust_map_bounds();
 }
 
 // Set marker characteristics
@@ -207,14 +207,25 @@ function fs_search() {
     })
 }
 
-// Returns the HTML for a fs_list
+// Makes the data_object and returns the HTML for a fs_list
 function create_fs_list_html(venues) {
     var fs_list_html = ""
     for (i=0; i<venues.length; i++) {
-        var v = venues[i].name;
-        fs_list_html += "<li><a href=\"#review\""; 
-        fs_list_html += " onclick=\"review('" + v + "'); return false\">";
-        fs_list_html += v + "</a></li>";
+        var data_object = {};
+        data_object.fs_id = venues[i].id;
+        data_object.name = venues[i].name;
+        data_object.address = venues[i].location.address;
+        data_object.lat = venues[i].location.lat;
+        data_object.lon = venues[i].location.lng;
+        
+        data_object_str = JSON.stringify(data_object);
+        localStorage.setItem(data_object.fs_id, data_object_str);
+        
+        console.log('fs_id ' +  data_object.fs_id);
+        fs_list_html += "<li><a href=\"#review\"";
+        fs_list_html += " data-transition=\"slide\""; 
+        fs_list_html += " onclick=\"review('" + data_object.fs_id + "'); return false\">";
+        fs_list_html += data_object.name + "</a></li>";
     }
     console.log("fs_list_html " + fs_list_html);
     return fs_list_html;
@@ -222,6 +233,8 @@ function create_fs_list_html(venues) {
 
 
 // Prepares the form
-function review(place){
-    document.getElementById("review_header").innerHTML = "review " + place;
+function review(fs_id){
+    data_object_str = localStorage.getItem(fs_id);
+    data_object = JSON.parse(data_object_str);
+    document.getElementById("review_header").innerHTML = "Review " + data_object.name;
 }
