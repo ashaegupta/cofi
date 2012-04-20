@@ -21,20 +21,6 @@ function initialize_current_location_on_map(lat, lon) {
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),
         options);
-    
-    /**
-    // Necessary to create the div first or can create and return in the RefreshControl function?
-    var refreshControlDiv = document.createElement('div');
-    var refreshControl = new refresh_control(refreshControlDiv, map);
-    refreshControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(refreshControlDiv);
-    
-    var addControlDiv = document.createElement('div');
-    var addControl = new add_control(addControlDiv, map);
-    addControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(addControlDiv);
-    */
-
 }
 
 // A jsonp request script
@@ -200,64 +186,6 @@ function format_phone(phone){
     return phone.substring(0,3) + "-" + phone.substring(3,6) + "-" + phone.substring(6);
 }
 
-/**
-// Create a refresh button for the maps page
-function refresh_control(controlDiv, map) {
-
-    controlDiv.style.padding = '5px';
-
-    /// Set CSS for the control border
-    var controlUI = document.createElement('div');
-    controlUI.className = 'map_button';
-    controlUI.title = 'Refresh the map';
-    controlDiv.appendChild(controlUI);
-
-    // Set CSS for the control interior
-    var controlText = document.createElement('div');
-    controlText.className = 'map_button_text';
-    controlText.innerHTML = '<b>Refresh</b>';
-    controlUI.appendChild(controlText);
-   
-    google.maps.event.addDomListener(controlUI, 'click', function() {
-      current_lat = map.getCenter().lat();
-      current_lon = map.getCenter().lng();
-      var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
-      //load_places_jspon_script(url);
-    });
-
-}
-
-// Create an add button for the maps page
-function add_control(controlDiv, map) {
-
-    controlDiv.style.padding = '5px';
-    
-    /// Set CSS for the control border
-    var controlUI = document.createElement('div');
-    controlUI.className = 'map_button';
-    controlUI.title = 'Add a place';
-    controlDiv.appendChild(controlUI);
-
-    // Set CSS for the control interior
-    var controlText = document.createElement('div');
-    controlText.className = 'map_button_text';
-    controlText.innerHTML = '<b>+</b>';
-    controlUI.appendChild(controlText);
-    
-    google.maps.event.addDomListener(controlUI, 'click', function() {
-      fs_search();
-      //set_visibility('add_place', 'block');
-    });
-    
-}
-
-// Set visibility of a doc
-function set_visibility(id, visibility) {
-    document.getElementById(id).style.display = visibility;
-}
-
-*/
-
 
 /******************************** Add Place **************************************/
 
@@ -274,8 +202,6 @@ function fs_search() {
     $.get(GET_fs_search, data, function(resp) {
         var json = jQuery.parseJSON(resp);
         console.log("Response JSON: ", json);
-        //var fs_list_div_data = document.getElementById('fs_list_data')
-        //fs_list_div_data.innerHTML = json.response.venues[0].name;
         var venues = json.response.venues;
         document.getElementById("fs_list").innerHTML = create_fs_list_html(venues);
     })

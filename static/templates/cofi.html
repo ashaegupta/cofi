@@ -21,7 +21,7 @@
   
   <body onload="start_cofi()">
       <!--Map-->
-      <div data-role="page" data-theme="b" id="map" style="width:100%; height:100%;">
+      <div data-role="page" data-theme="b" id="map" class="map_page">
           <div data-role="header" data-position="inline">
             	<a href="#add" data-role="button" data-mini="true"
             	data-inline="true" class="ui-btn-right" data-theme="c" data-transition="slide" onclick="fs_search(); return false">+</a>
@@ -29,12 +29,14 @@
             	<a href="#" data-role="button" data-mini="true" id="refresh" onclick="refresh(); return false"
             	data-inline="true" class="ui-btn-left" data-theme="c">refresh</a>            	
             </div>
-           <div id="map_canvas" style="width:330px; height:330px;"></div>
+            <div data-role="content" class="map_content"> 
+                    <div id="map_canvas"></div>
+            </div>
       </div>      
       
       <!--Add Place-->
       <div data-role="page" id="add" data-theme="b">
-          <div data-role="header" data-position="inline">
+          <div data-role="header" data-position="inline" data-fixed="true" data-fullscreen="true">
               <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-theme="c" data-transition="slide"
               data-direction="reverse" onclick="refresh(); return false">map</a>
           	  <h1>add place</h1>
@@ -50,7 +52,7 @@
     
       <!--Review Place-->
        <div data-role="page" id="review" data-theme="b">
-           <div data-role="header" data-position="inline">
+           <div data-role="header" data-position="inline" data-fixed="true">
                <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-theme="c" data-transition="slide"
                data-direction="reverse" onclick="refresh(); return false">map</a>
            	  <h1 id="review_header"></h1>
