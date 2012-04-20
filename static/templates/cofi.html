@@ -57,36 +57,40 @@
                <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-mini="true" data-theme="c"
                     data-transition="slide" data-direction="reverse" onclick="refresh(); return false">map</a>
            	  <h1 id="review_header"></h1>
+           	  <a href="#add" data-role="button" data-inline="true" class="ui-btn-right" data-mini="true" data-theme="c"
+                      data-transition="slide" data-direction="reverse" onclick="add(); return false">back</a>
            </div>
                 
            <div data-role="content">
-               <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
-                    <legend>Wifi:</legend>
-                    <input type="radio" name="radio-wifi" id="wifi_2" value="2" class="radio_button" data-theme="c"/>
-                    <label for="wifi_2" data-theme="c">Unlimited</label>
-                    <input type="radio" name="radio-wifi" id="wifi_1" value="1" class="radio_button" data-theme="c"/>
-                    <label for="wifi_1" data-theme="c">Limited</label>
-                    <input type="radio" name="radio-wifi" id="wifi_0" value="0" class="radio_button" data-theme="c"/>
-                    <label for="wifi_0" data-theme="c">Nada</label>
-               </fieldset>
-               <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
-                    <legend>Plugs:</legend>
-                    <input type="radio" name="radio-plugs" id="plugs_1" value="1" class="radio_button" data-theme="c"/>
-                    <label for="plugs_1" data-theme="c">Yep</label>
-                    <input type="radio" name="radio-plugs" id="plugs_0" value="0" class="radio_button" data-theme="c"/>
-                    <label for="plugs_0" data-theme="c">No</label>
-                    <input type="radio" name="radio-plugs" id="plugs_-1" value="-1" class="radio_button" data-theme="c"/>
-                    <label for="plugs_-1" data-theme="c">Unsure</label>
-                </fieldset>
-                <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
-                    <legend>Experience:</legend>
-                    <input type="radio" name="radio-exp" id="exp_2" value="2" class="radio_button" data-theme="c"/>
-                    <label for="exp_2" data-theme="c">Making it my new office</label>
-                    <input type="radio" name="radio_exp" id="exp_1" value="1" class="radio_button" data-theme="c"/>
-                    <label for="exp_1" data-theme="c">Pretty good</label>
-                    <input type="radio" name="radio_exp" id="exp_0" value="0" class="radio_button" data-theme="c"/>
-                    <label for="exp_0" data-theme="c">Sub par</label>
-                </fieldset>
+               <form action="form.php" id="review_form" method="post">
+                   <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c" data-mini="true">
+                        <legend>Wifi:</legend>
+                        <input type="radio" name="radio-wifi" id="wifi_2" value="2" class="radio_button" data-theme="c"/>
+                        <label for="wifi_2" data-theme="c">Unlimited</label>
+                        <input type="radio" name="radio-wifi" id="wifi_1" value="1" class="radio_button" data-theme="c"/>
+                        <label for="wifi_1" data-theme="c">Limited</label>
+                        <input type="radio" name="radio-wifi" id="wifi_0" value="0" class="radio_button" data-theme="c"/>
+                        <label for="wifi_0" data-theme="c">Nada</label>
+                   </fieldset>
+                   <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
+                        <legend>Plugs:</legend>
+                        <input type="radio" name="radio-plugs" id="plugs_1" value="1" class="radio_button" data-theme="c"/>
+                        <label for="plugs_1" data-theme="c">Yep</label>
+                        <input type="radio" name="radio-plugs" id="plugs_0" value="0" class="radio_button" data-theme="c"/>
+                        <label for="plugs_0" data-theme="c">No</label>
+                        <input type="radio" name="radio-plugs" id="plugs_-1" value="-1" class="radio_button" data-theme="c"/>
+                        <label for="plugs_-1" data-theme="c">Unsure</label>
+                    </fieldset>
+                    <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
+                        <legend>Experience:</legend>
+                        <input type="radio" name="radio-exp" id="exp_2" value="2" class="radio_button" data-theme="c"/>
+                        <label for="exp_2" data-theme="c">Making it my new office</label>
+                        <input type="radio" name="radio_exp" id="exp_1" value="1" class="radio_button" data-theme="c"/>
+                        <label for="exp_1" data-theme="c">Pretty good</label>
+                        <input type="radio" name="radio_exp" id="exp_0" value="0" class="radio_button" data-theme="c"/>
+                        <label for="exp_0" data-theme="c">Sub par</label>
+                    </fieldset>
+                </form>
            </div>
       
       </div>

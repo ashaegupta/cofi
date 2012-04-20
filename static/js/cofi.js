@@ -9,6 +9,7 @@ var maxPlaces = 20;
 var current_lat;
 var current_lon;
 
+var adjust_map_bounds_control = true;
 /******************************** Create Map **************************************/
 
 // Map current location
@@ -56,7 +57,9 @@ function map_places(places){
         infowindow = create_infowindow(marker, places[p]);
         all_infowindows.push(infowindow);
     }
-    //adjust_map_bounds();
+    if (adjust_map_bounds_control){
+        adjust_map_bounds();
+    }
 }
 
 // Set marker characteristics
@@ -169,6 +172,7 @@ function refresh() {
     current_lat = map.getCenter().lat();
     current_lon = map.getCenter().lng();
     var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
+    adjust_map_bounds_control = false;
     load_places_jspon_script(url);
 }
 
