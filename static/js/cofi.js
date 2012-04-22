@@ -214,39 +214,53 @@ function fs_search() {
 
 // Makes the data_object and returns the HTML for a fs_list
 function create_fs_list_html(venues) {
-    var fs_list_html = ""
+    var fs_list_html = "";
     for (i=0; i<venues.length; i++) {
-        var data_object = {};
         var venue = venues[i];
-        data_object.id = venue.id;
-        data_object.name = venue.name;
-        data_object.address = venue.location.address;
-        data_object.lat = venue.location.lat;
-        data_object.lon = venue.location.lng;
-        
-        console.log("contact", venue.contact);
-        
-        if ("phone" in venue.contact) {
-            console.log("PHONE EXISTS", venue.contact.phone);
-            data_object.phone = venue.contact.phone;
-        }
-        
-        var data_object_str = JSON.stringify(data_object);
-        localStorage.setItem(data_object.id, data_object_str);
-        var id_type = 'fs_id';
-        
-        fs_list_html += "<li><a href=\"#review\"";
-        fs_list_html += " data-transition=\"slide\""; 
-        fs_list_html += " onclick=\"review_form(" 
-        fs_list_html += "id='" + data_object.id + "', id_type='" + id_type + "'); return false\">";
-        fs_list_html += data_object.name + "</a></li>";
+        parse_and_add_fs_venue_to_local_storage(venue);
+        fs_list_html += create_fs_list_element(id=venue.id, name=venue.name);
     }
+    
     return fs_list_html;
 }
 
+// Parse and add fs object to local storage
+function parse_and_add_fs_venue_to_local_storage(venue){
+    var data_object = {};
+    data_object.id = venue.id;
+    data_object.name = venue.name;
+    data_object.address = venue.location.address;
+    data_object.lat = venue.location.lat;
+    data_object.lon = venue.location.lng;
+    
+    if ("phone" in venue.contact) {
+        data_object.phone = venue.contact.phone;
+    }
+    
+    var data_object_str = JSON.stringify(data_object);
+    localStorage.setItem(data_object.id, data_object_str);
+}
+
+
+// Write html for an element in the fs list
+function create_fs_list_element(id, name) {
+    var id_type = 'fs_id';
+    var element_html =  "<li data-corners=\"false\" data-shadow=\"false\" data-iconshadow=\"true\" data-wrapperels=\"div\"";
+    element_html += "data-icon=\"arrow-r\" data-iconpos=\"right\" data-theme=\"c\"";
+    element_html += "class=\"ui-btn ui-btn-icon-right ui-li-has-arrow ui-li ui-corner-bottom ui-btn-up-c\">";
+    element_html += "<div class=\"ui-btn-inner ui-li\"><div class=\"ui-btn-text\">";
+    
+    element_html += "<a href=\"#review\"";
+    element_html += " data-transition=\"slide\""; 
+    element_html += " onclick=\"make_review_form("; 
+    element_html += "id='" + id + "', id_type='" + id_type + "'); return false\" class=\"ui-link-inherit\">";
+    element_html += name + "</a></div></div></li>";
+    
+    return element_html;
+}
 
 // Prepares the form
-function review_form(id, id_type){
+function make_review_form(id, id_type){
     var place_data_object_str = localStorage.getItem(id);
     var place_data_object = JSON.parse(place_data_object_str);
     document.getElementById("review_header").innerHTML = "Review " + place_data_object.name;
