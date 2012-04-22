@@ -9,12 +9,12 @@
             <link rel="apple-touch-startup-image" href="{{static_url('assets/app-homescreen.png')}}" /> 
             <link rel="stylesheet" type="text/css" href="{{static_url('css/cofi.css')}}"/>
             <script type = "text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+            <script type="text/javascript"
+                   src="{{static_url('js/cofi.js')}}">
+            </script>
             <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
            <script type="text/javascript"
                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAaBTMLD9cn5lMR5qF9NGwumhWZOkxosBY&sensor=true">
-           </script>
-           <script type="text/javascript"
-               src="{{static_url('js/cofi.js')}}">
            </script>
   </head>
   
@@ -36,11 +36,11 @@
       
       <!--Add Place-->
       <div data-role="page" id="add" data-theme="b">
-          <div data-role="header" data-position="fixed" data-fixed="true" data-fullscreen="true">
-              <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-theme="c" data-transition="slide"
+          <div data-role="header" data-position="inline" data-fixed="true">
+              <a href="#map" data-role="button" class="ui-btn-left" data-theme="c" data-transition="slide"
               data-direction="reverse" data-mini="true" onclick="refresh(); return false">map</a>
           	  <h1>Add a place</h1>
-          	  <a href="#" data-role="button" data-mini="true" data-inline="true" class="ui-btn-right" data-theme="c" 
+          	  <a href="#" data-role="button" data-mini="true" class="ui-btn-right" data-theme="c" 
           	        data-transition="slide" onclick="fs_search(); return false">search</a>
           </div>
 
@@ -54,10 +54,10 @@
       <!--Review Place-->
        <div data-role="page" id="review" data-theme="b">
            <div data-role="header" data-position="inline" data-fixed="true">
-           	  <a href="#add" data-role="button" data-inline="true" class="ui-btn-left" data-mini="true" data-theme="c"
+           	  <a href="#add" data-role="button" class="ui-btn-left" data-mini="true" data-theme="c"
                       data-transition="slide" data-direction="reverse" onclick="add(); return false">places</a>
                       <h1 id="review_header"></h1>
-            <a href="#map" data-role="button" data-inline="true" class="ui-btn-right" data-mini="true" data-theme="c"
+            <a href="#map" data-role="button" class="ui-btn-right" data-mini="true" data-theme="c"
                     data-transition="slide" data-direction="reverse" onclick="refresh(); return false">map</a>
                       
            </div>
