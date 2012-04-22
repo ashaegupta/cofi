@@ -165,7 +165,7 @@ function get_and_map_places(position) {
     current_lon = current_position.longitude;
     initialize_current_location_on_map(current_lat, current_lon);
     var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
-    //load_places_jspon_script(url);
+    load_places_jspon_script(url);
 }
 
 // Refresh the map once the user has moved it
@@ -174,7 +174,7 @@ function refresh() {
     current_lon = map.getCenter().lng();
     var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
     adjust_map_bounds_control = false;
-    //load_places_jspon_script(url);
+    load_places_jspon_script(url);
 }
 
 // Make google map link for a given position
