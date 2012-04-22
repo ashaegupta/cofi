@@ -3,6 +3,7 @@ var all_infowindows = [];
 
 var GET_cofi_places = "/places?"
 var GET_fs_search = "/fs?"
+var POST_cofi_places = "/places"
 var places = [];
 var maxPlaces = 20;
 
@@ -164,7 +165,7 @@ function get_and_map_places(position) {
     current_lon = current_position.longitude;
     initialize_current_location_on_map(current_lat, current_lon);
     var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
-    load_places_jspon_script(url);
+    //load_places_jspon_script(url);
 }
 
 // Refresh the map once the user has moved it
@@ -173,7 +174,7 @@ function refresh() {
     current_lon = map.getCenter().lng();
     var url = GET_cofi_places + "lat=" + current_lat + "&lon=" + current_lon + "&callback=handle_request";
     adjust_map_bounds_control = false;
-    load_places_jspon_script(url);
+    //load_places_jspon_script(url);
 }
 
 // Make google map link for a given position
@@ -196,7 +197,7 @@ function format_phone(phone){
 // Find nearby places
 function fs_search() {
     var query = $("#fs_list").prev('form[role="search"]').find('input[data-type="search"]').val();
-    data = {
+    var data = {
         "lat":current_lat,
         "lon":current_lon
     };
@@ -208,7 +209,7 @@ function fs_search() {
         console.log("Response JSON: ", json);
         var venues = json.response.venues;
         document.getElementById("fs_list").innerHTML = create_fs_list_html(venues);
-    })
+    });
 }
 
 // Makes the data_object and returns the HTML for a fs_list
@@ -216,29 +217,73 @@ function create_fs_list_html(venues) {
     var fs_list_html = ""
     for (i=0; i<venues.length; i++) {
         var data_object = {};
-        data_object.fs_id = venues[i].id;
-        data_object.name = venues[i].name;
-        data_object.address = venues[i].location.address;
-        data_object.lat = venues[i].location.lat;
-        data_object.lon = venues[i].location.lng;
+        var venue = venues[i];
+        data_object.id = venue.id;
+        data_object.name = venue.name;
+        data_object.address = venue.location.address;
+        data_object.lat = venue.location.lat;
+        data_object.lon = venue.location.lng;
         
-        data_object_str = JSON.stringify(data_object);
-        localStorage.setItem(data_object.fs_id, data_object_str);
+        console.log("contact", venue.contact);
         
-        console.log('fs_id ' +  data_object.fs_id);
+        if ("phone" in venue.contact) {
+            console.log("PHONE EXISTS", venue.contact.phone);
+            data_object.phone = venue.contact.phone;
+        }
+        
+        var data_object_str = JSON.stringify(data_object);
+        localStorage.setItem(data_object.id, data_object_str);
+        var id_type = 'fs_id';
+        
         fs_list_html += "<li><a href=\"#review\"";
         fs_list_html += " data-transition=\"slide\""; 
-        fs_list_html += " onclick=\"review('" + data_object.fs_id + "'); return false\">";
+        fs_list_html += " onclick=\"review_form(" 
+        fs_list_html += "id='" + data_object.id + "', id_type='" + id_type + "'); return false\">";
         fs_list_html += data_object.name + "</a></li>";
     }
-    console.log("fs_list_html " + fs_list_html);
     return fs_list_html;
 }
 
 
 // Prepares the form
-function review(fs_id){
-    data_object_str = localStorage.getItem(fs_id);
-    data_object = JSON.parse(data_object_str);
-    document.getElementById("review_header").innerHTML = "Review " + data_object.name;
+function review_form(id, id_type){
+    var place_data_object_str = localStorage.getItem(id);
+    var place_data_object = JSON.parse(place_data_object_str);
+    document.getElementById("review_header").innerHTML = "Review " + place_data_object.name;
+    document.getElementById("review_place_id").value = id;
+    document.getElementById("review_place_id").name = id_type;
+    $("input[type='radio']").prop("checked",false).checkboxradio("refresh");
+}
+
+function post_review(){
+    // Get review form elements
+    var review_data_dict = {};
+    var review_data_str = $('#review_form').serializeArray();
+    $.each(review_data_str, function(i, field){
+       review_data_dict[field.name] = field.value;
+     });
+     
+    // Get place data from localstorage elements
+    var id = document.getElementById('review_place_id').value;
+    var place_data_object_str = localStorage.getItem(id);
+    var place_data_object = JSON.parse(place_data_object_str);
+    review_data_dict.name = place_data_object.name;
+    review_data_dict.lat = place_data_object.lat;
+    review_data_dict.lon = place_data_object.lon;
+    review_data_dict.address = place_data_object.address;
+    
+    if ("phone" in place_data_object){
+        review_data_dict.phone = place_data_object.phone;
+    }
+    
+    console.log("review_data_dict", review_data_dict);
+    $.ajax({
+        type: 'POST',
+        url: POST_cofi_places,
+        data: review_data_dict,
+        success: function(data) {
+             console.log(data);
+             alert("success" ); 
+        }
+    });
 }

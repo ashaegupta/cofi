@@ -30,7 +30,7 @@ def make_review_dict(wifi, plugs, exp):
     review = {}
     if wifi:
         review[Place.A_WIFI] = wifi
-    if plugs:
+    if plugs and not plugs == "-1":
         review[Place.A_PLUGS] = plugs
     if exp:
         review[Place.A_EXP] = exp

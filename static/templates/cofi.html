@@ -54,68 +54,49 @@
       <!--Review Place-->
        <div data-role="page" id="review" data-theme="b">
            <div data-role="header" data-position="inline" data-fixed="true">
-               <a href="#map" data-role="button" data-inline="true" class="ui-btn-left" data-mini="true" data-theme="c"
+           	  <a href="#add" data-role="button" data-inline="true" class="ui-btn-left" data-mini="true" data-theme="c"
+                      data-transition="slide" data-direction="reverse" onclick="add(); return false">places</a>
+                      <h1 id="review_header"></h1>
+            <a href="#map" data-role="button" data-inline="true" class="ui-btn-right" data-mini="true" data-theme="c"
                     data-transition="slide" data-direction="reverse" onclick="refresh(); return false">map</a>
-           	  <h1 id="review_header"></h1>
-           	  <a href="#add" data-role="button" data-inline="true" class="ui-btn-right" data-mini="true" data-theme="c"
-                      data-transition="slide" data-direction="reverse" onclick="add(); return false">back</a>
+                      
            </div>
                 
            <div data-role="content">
-               <form action="form.php" id="review_form" method="post">
+               <form id="review_form">
+                   <input type="hidden" id="review_place_id" name="" value="">
                    <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c" data-mini="true">
                         <legend>Wifi:</legend>
-                        <input type="radio" name="radio-wifi" id="wifi_2" value="2" class="radio_button" data-theme="c"/>
-                        <label for="wifi_2" data-theme="c">Unlimited</label>
-                        <input type="radio" name="radio-wifi" id="wifi_1" value="1" class="radio_button" data-theme="c"/>
-                        <label for="wifi_1" data-theme="c">Limited</label>
-                        <input type="radio" name="radio-wifi" id="wifi_0" value="0" class="radio_button" data-theme="c"/>
-                        <label for="wifi_0" data-theme="c">Nada</label>
+                        <input type="radio" name="wifi" id="wifi_radio_2" value="2" class="radio_button" data-theme="c"/>
+                        <label for="wifi_radio_2" data-theme="c">All day</label>
+                        <input type="radio" name="wifi" id="wifi_radio_1" value="1" class="radio_button" data-theme="c"/>
+                        <label for="wifi_radio_1" data-theme="c">Limited</label>
+                        <input type="radio" name="wifi" id="wifi_radio_0" value="0" class="radio_button" data-theme="c"/>
+                        <label for="wifi_radio_0" data-theme="c">Nada</label>
                    </fieldset>
                    <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
                         <legend>Plugs:</legend>
-                        <input type="radio" name="radio-plugs" id="plugs_1" value="1" class="radio_button" data-theme="c"/>
-                        <label for="plugs_1" data-theme="c">Yep</label>
-                        <input type="radio" name="radio-plugs" id="plugs_0" value="0" class="radio_button" data-theme="c"/>
-                        <label for="plugs_0" data-theme="c">No</label>
-                        <input type="radio" name="radio-plugs" id="plugs_-1" value="-1" class="radio_button" data-theme="c"/>
-                        <label for="plugs_-1" data-theme="c">Unsure</label>
+                        <input type="radio" name="plugs" id="plugs_radio_1" value="1" class="radio_button" data-theme="c"/>
+                        <label for="plugs_radio_1" data-theme="c">Yep</label>
+                        <input type="radio" name="plugs" id="plugs_radio_0" value="0" class="radio_button" data-theme="c"/>
+                        <label for="plugs_radio_0" data-theme="c">No</label>
+                        <input type="radio" name="plugs" id="plugs_radio_-1" value="-1" class="radio_button" data-theme="c"/>
+                        <label for="plugs_radio_-1" data-theme="c">Unsure</label>
                     </fieldset>
                     <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
-                        <legend>Experience:</legend>
-                        <input type="radio" name="radio-exp" id="exp_2" value="2" class="radio_button" data-theme="c"/>
-                        <label for="exp_2" data-theme="c">Making it my new office</label>
-                        <input type="radio" name="radio_exp" id="exp_1" value="1" class="radio_button" data-theme="c"/>
-                        <label for="exp_1" data-theme="c">Pretty good</label>
-                        <input type="radio" name="radio_exp" id="exp_0" value="0" class="radio_button" data-theme="c"/>
-                        <label for="exp_0" data-theme="c">Sub par</label>
+                        <legend>Overall:</legend>
+                        <input type="radio" name="exp" id="exp_radio_2" value="2" class="radio_button" data-theme="c"/>
+                        <label for="exp_radio_2" data-theme="c">Great</label>
+                        <input type="radio" name="exp" id="exp_radio_1" value="1" class="radio_button" data-theme="c"/>
+                        <label for="exp_radio_1" data-theme="c">Good</label>
+                        <input type="radio" name="exp" id="exp_radio_0" value="0" class="radio_button" data-theme="c"/>
+                        <label for="exp_radio_0" data-theme="c">Bad</label>
                     </fieldset>
+                    <a href="#" data-role="button" data-mini="true" data-theme="c" onclick="post_review(); return false">Save</a>
                 </form>
            </div>
       
       </div>
-      
-    <!--  
-      <div data-role="page" id="add_place">
-          <form>
-                Place: <input type="text" name="firstname" /><br />
-                <br />
-                Wifi<br />
-                <input type="checkbox" name="wifi" value="2" /> Unlimited<br />
-                <input type="checkbox" name="wifi" value="1" /> Limited<br />
-                <input type="checkbox" name="wifi" value="0" /> DNE<br />
-                <br />       
-                Outlets?<br />
-                <input type="checkbox" name="plugs" value="1" /> Yep<br />
-                <input type="checkbox" name="plugs" value="0" /> No<br />
-                <br />
-                Overall Experience<br />
-                <input type="checkbox" name="exp" value="2" /> Love<br />
-                <input type="checkbox" name="exp" value="1" /> Pretty good<br />
-                <input type="checkbox" name="exp" value="0" /> Won't come back<br />
-        </form>
-      </div>
-      -->
   </body>
 </html>
 

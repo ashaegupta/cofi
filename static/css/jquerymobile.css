@@ -57,7 +57,7 @@
 	border: 1px solid 		#2A2A2A /*{a-body-border}*/;
 	background: 			#222222 /*{a-body-background-color}*/;
 	color: 					#fff /*{a-body-color}*/;
-	 text-shadow: 0 /*{a-body-shadow-x}*/ 1px /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ #000 /*{a-body-shadow-color}*/;
+	text-shadow: 0 /*{a-body-shadow-x}*/ 1px /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ #000 /*{a-body-shadow-color}*/;
 	font-weight: normal;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #666 /*{a-body-background-start}*/), to( #222 /*{a-body-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient(#666 /*{a-body-background-start}*/, #222 /*{a-body-background-end}*/); /* Chrome 10+, Saf5.1+ */
@@ -728,19 +728,19 @@ a.ui-link-inherit {
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-btn-active {
-	border: 1px solid 		#8d93d6 /*{global-active-border}*/;
-	background: 			#9797b8 /*{global-active-background-color}*/;
+	border: 1px solid 		#71c1a2 /*{global-active-border}*/;
+	background: 			#71c1a2 /*{global-active-background-color}*/;
 	font-weight: bold;
 	color: 					#fff /*{global-active-color}*/;
 	cursor: pointer;
-	text-shadow: 0 /*{global-active-shadow-x}*/ -1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #8d93d6 /*{global-active-shadow-color}*/;
+	text-shadow: 0 /*{global-active-shadow-x}*/ -1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #71c1a2 /*{global-active-shadow-color}*/;
 	text-decoration: none;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #8d93d6 /*{global-active-background-start}*/), to( #8d93d6 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient(#8d93d6 /*{global-active-background-start}*/, #8d93d6 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient(#8d93d6 /*{global-active-background-start}*/, #8d93d6 /*{global-active-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient(#8d93d6 /*{global-active-background-start}*/, #8d93d6 /*{global-active-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient(#8d93d6 /*{global-active-background-start}*/, #8d93d6 /*{global-active-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient(#8d93d6 /*{global-active-background-start}*/, #8d93d6 /*{global-active-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #8aedc7 /*{global-active-background-start}*/), to( #57947c /*{global-active-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient(#8aedc7 /*{global-active-background-start}*/, #57947c /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient(#8aedc7 /*{global-active-background-start}*/, #57947c /*{global-active-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient(#8aedc7 /*{global-active-background-start}*/, #57947c /*{global-active-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient(#8aedc7 /*{global-active-background-start}*/, #57947c /*{global-active-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient(#8aedc7 /*{global-active-background-start}*/, #57947c /*{global-active-background-end}*/);
 	font-family: Courier, sans-serif /*{global-font-family}*/;
 }
 .ui-btn-active a.ui-link-inherit {
@@ -761,62 +761,62 @@ a.ui-link-inherit {
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-corner-tl {
-	-moz-border-radius-topleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-left-radius: 			.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-tr {
-	-moz-border-radius-topright: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-right-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-right-radius: 			.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-bl {
-	-moz-border-radius-bottomleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-bottom-left-radius: 			.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-br {
-	-moz-border-radius-bottomright: 	.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-right-radius: .6em /*{global-radii-blocks}*/;
-	border-bottom-right-radius: 		.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-top {
-	-moz-border-radius-topleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-left-radius: 			.6em /*{global-radii-blocks}*/;
-	-moz-border-radius-topright: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-right-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-right-radius: 			.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-bottom {
-	-moz-border-radius-bottomleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-bottom-left-radius: 			.6em /*{global-radii-blocks}*/;
-	-moz-border-radius-bottomright: 	.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-right-radius: .6em /*{global-radii-blocks}*/;
-	border-bottom-right-radius: 		.6em /*{global-radii-blocks}*/;
-	}
-.ui-corner-right {
-	-moz-border-radius-topright: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-right-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-right-radius: 			.6em /*{global-radii-blocks}*/;
-	-moz-border-radius-bottomright: 	.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-right-radius: .6em /*{global-radii-blocks}*/;
-	border-bottom-right-radius: 		.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-left {
-	-moz-border-radius-topleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-top-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-top-left-radius: 			.6em /*{global-radii-blocks}*/;
-	-moz-border-radius-bottomleft: 		.6em /*{global-radii-blocks}*/;
-	-webkit-border-bottom-left-radius: 	.6em /*{global-radii-blocks}*/;
-	border-bottom-left-radius: 			.6em /*{global-radii-blocks}*/;
-}
-.ui-corner-all {
-	-moz-border-radius: 				.6em /*{global-radii-blocks}*/;
-	-webkit-border-radius: 				.6em /*{global-radii-blocks}*/;
-	border-radius: 						.6em /*{global-radii-blocks}*/;
-}
+	-moz-border-radius-topleft: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-top-left-radius: 	.1em /*{global-radii-blocks}*/;
+	border-top-left-radius: 			.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-tr {                          
+	-moz-border-radius-topright: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-top-right-radius: 	.1em /*{global-radii-blocks}*/;
+	border-top-right-radius: 			.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-bl {                          
+	-moz-border-radius-bottomleft: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-bottom-left-radius: 	.1em /*{global-radii-blocks}*/;
+	border-bottom-left-radius: 			.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-br {                         
+	-moz-border-radius-bottomright: 	.1em /*{global-radii-blocks}*/;
+	-webkit-border-bottom-right-radius: .1em /*{global-radii-blocks}*/;
+	border-bottom-right-radius: 		.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-top {                         
+	-moz-border-radius-topleft: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-top-left-radius: 	.1em /*{global-radii-blocks}*/;
+	border-top-left-radius: 			.1em /*{global-radii-blocks}*/;
+	-moz-border-radius-topright: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-top-right-radius: 	.1em /*{global-radii-blocks}*/;
+	border-top-right-radius: 			.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-bottom {                      
+	-moz-border-radius-bottomleft: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-bottom-left-radius: 	.1em /*{global-radii-blocks}*/;
+	border-bottom-left-radius: 			.1em /*{global-radii-blocks}*/;
+	-moz-border-radius-bottomright: 	.1em /*{global-radii-blocks}*/;
+	-webkit-border-bottom-right-radius: .1em /*{global-radii-blocks}*/;
+	border-bottom-right-radius: 		.1em /*{global-radii-blocks}*/;
+	}                                    
+.ui-corner-right {                       
+	-moz-border-radius-topright: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-top-right-radius: 	.1em /*{global-radii-blocks}*/;
+	border-top-right-radius: 			.1em /*{global-radii-blocks}*/;
+	-moz-border-radius-bottomright: 	.1em /*{global-radii-blocks}*/;
+	-webkit-border-bottom-right-radius: .1em /*{global-radii-blocks}*/;
+	border-bottom-right-radius: 		.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-left {                        
+	-moz-border-radius-topleft: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-top-left-radius: 	.1em /*{global-radii-blocks}*/;
+	border-top-left-radius: 			.1em /*{global-radii-blocks}*/;
+	-moz-border-radius-bottomleft: 		.1em /*{global-radii-blocks}*/;
+	-webkit-border-bottom-left-radius: 	.1em /*{global-radii-blocks}*/;
+	border-bottom-left-radius: 			.1em /*{global-radii-blocks}*/;
+}                                        
+.ui-corner-all {                         
+	-moz-border-radius: 				.1em /*{global-radii-blocks}*/;
+	-webkit-border-radius: 				.1em /*{global-radii-blocks}*/;
+	border-radius: 						.1em /*{global-radii-blocks}*/;
+}                                        
 .ui-corner-none {
 	-moz-border-radius: 				   0;
 	-webkit-border-radius: 				   0;
@@ -1049,14 +1049,11 @@ a.ui-link-inherit {
 	-webkit-border-bottom-left-radius: 	1em /*{global-radii-buttons}*/;
 	border-bottom-left-radius: 			1em /*{global-radii-buttons}*/;
 }
-.ui-btn-corner-all {
-}
-
 
 .ui-btn-corner-all {
-	-moz-border-radius: 				1em /*{global-radii-buttons}*/;
-	-webkit-border-radius: 				1em /*{global-radii-buttons}*/;
-	border-radius: 						1em /*{global-radii-buttons}*/;
+	-moz-border-radius: 				0.1em /*{global-radii-buttons}*/;
+	-webkit-border-radius: 				0.1em /*{global-radii-buttons}*/;
+	border-radius: 						0.1em /*{global-radii-buttons}*/;
 }
 
 /* radius clip workaround for cleaning up corner trapping */
@@ -1126,9 +1123,9 @@ a.ui-link-inherit {
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-focus {
-	-moz-box-shadow: 0px 0px 12px 		#387bbe /*{global-active-background-color}*/;
-	-webkit-box-shadow: 0px 0px 12px 	#387bbe /*{global-active-background-color}*/;
-	box-shadow: 0px 0px 12px 			#387bbe /*{global-active-background-color}*/;
+	-moz-box-shadow: 0px 0px 12px 		#71c1a2 /*{global-active-background-color}*/;
+	-webkit-box-shadow: 0px 0px 12px 	#71c1a2 /*{global-active-background-color}*/;
+	box-shadow: 0px 0px 12px 			#71c1a2 /*{global-active-background-color}*/;
 }
 
 /* unset box shadow in browsers that don't do it right

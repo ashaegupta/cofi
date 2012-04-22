@@ -72,6 +72,7 @@ class PlacesHandler(tornado.web.RequestHandler):
     def post(self):
         ''' Add a new place or review a place depending on whether place_id is passed
         '''
+        logging.info('****************Making a post**************', self.request.arguments)
         request_keys = self.request.arguments.keys()
         # review an existing place if place_id exists
         if Place.A_PLACE_ID in request_keys:

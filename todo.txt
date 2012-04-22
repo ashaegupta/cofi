@@ -2,20 +2,12 @@ cofi.py notes
 =============
 
 ## ADDING A PLACE 
-1. Add buttons to google map page (plus sign) -- DONE
-2. Add place page 4 inputs
-    - get FS place place
-    - wifi, plugs, exp options
-    - "Add" button
-3. FS get a place from a lat/lon combo - DONE
-    - store the place_id, lat/lon, address
-    - process and parse returned data
-4. FS method to get a place based on a query - DONE
-    - store the place_id, lat/lon, address
-    - process and parse returned data    
-4. AJAX call to add a place
-5. Edit server response to have success
-6. Return user to the map page - DONE
+- disable button
+- change to text 
+- send back to map with a message** 
+- clean up local storage data 
+- Change server to deal with -1 for plugs
+- PASS IN PHONE NUMBER
 
 ## REVIEWING A PLACE
 1. Add button to place name
@@ -32,9 +24,7 @@ cofi.py notes
 ## ICONS TO DEMO DATA
 
 ## Nice to have
-- clean up local storage data 
-- remove the extra zoom - DONE
-- square buttons - DONE
+- find place by fs_id and add to data
 - show address with place name in fs_list
 - add comments
 - when creating a mongo update doc across multiple methods, make sure you don't overwrite keys created in one method in another, e.g. '$set' in Place.add_place
