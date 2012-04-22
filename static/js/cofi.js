@@ -148,6 +148,7 @@ function adjust_map_bounds() {
 // Driver methods. Start_cofi is the first method that runs to find location
 // If success, continue to get_and_map_places, else return an error.
 function start_cofi(){
+    $.mobile.orientationChangeEnabled = false;
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(get_and_map_places, no_position);
     } else {
