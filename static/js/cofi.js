@@ -9,8 +9,10 @@ var maxPlaces = 20;
 
 var current_lat;
 var current_lon;
-
 var adjust_map_bounds_control = true;
+
+
+
 /******************************** Create Map **************************************/
 
 // Map current location
@@ -18,7 +20,7 @@ function initialize_current_location_on_map(lat, lon) {
     var options = {
       center: new google.maps.LatLng(lat, lon),
       zoom: 15,
-      disableDefaultUI: false,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),
