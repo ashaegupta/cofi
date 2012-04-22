@@ -1083,6 +1083,11 @@ a.ui-link-inherit {
 /* Overlay / modal
 -----------------------------------------------------------------------------------------------------------*/
 
+/* Patch for page flickering */
+.ui-page {
+        -webkit-backface-visibility: hidden;
+}
+
 .ui-overlay {
 	background: #666;
 	opacity: .5;
