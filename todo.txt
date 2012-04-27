@@ -3,28 +3,29 @@ cofi.py notes
 
 ## ADDING A PLACE 
 - disable button
-- change to text 
-- send back to map with a message** 
-- clean up local storage data 
-- Change server to deal with -1 for plugs
-- PASS IN PHONE NUMBER
+- change loading text 
+- send back to map
+- clean up local storage data // is this only for one session
 
 ## REVIEWING A PLACE
 1. Add button to place name
 2. Create place page with 3 inputs
     - wifi, plugs, exp options
     - "Review Place" button
-3. AJAX call to add a place
+3. Be able to review a place that may already be added
 4. Edit server response to have success
 5. Return user to the map page
 
 ## CACHING DATA
+-
 
-
-## ICONS TO DEMO DATA
+## GETTING PLACES
+- database first
+- add in yelp review
+- add in fs tip
 
 ## Nice to have
-- find place by fs_id and add to data
+- images for experience
 - show address with place name in fs_list
 - add comments
 - css on the review page
@@ -34,3 +35,20 @@ cofi.py notes
 - use docstrings for each method instead of comments above
 - raise exceptions instead of returning an error dictionary. use try/except clauses to catch exceptions and process them into json for returning
 - import necessary functions from MongoMixin; get rid of class structure in Place
+
+
+###### Different paths:
+- place is added from fs/GEt
+--> check to see if fs_id exists in db
+--> else check if phone number exists and street address is the same
+--> else add as new place in the db
+
+- place is reviewed from cofi/GET
+---> if has a place_id: in database
+---> else will have yelp_id
+            --> check to see if has fs_id, and it exists in db
+            --> else check if phone number exists in db and street address is the same
+            --> else add as new place in the db
+            
+a b c e not f
+places that aren't in either set

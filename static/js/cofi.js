@@ -21,7 +21,6 @@ $(document).bind("mobileinit", function(){
 
 
 
-
 /******************************** Create Map **************************************/
 
 // Map current location
@@ -262,7 +261,6 @@ function create_fs_list_element(id, name) {
     element_html += "<div class=\"ui-btn-inner ui-li\"><div class=\"ui-btn-text\">";
     
     element_html += "<a href=\"#review\"";
-    element_html += " data-transition=\"slide\""; 
     element_html += " onclick=\"make_review_form("; 
     element_html += "id='" + id + "', id_type='" + id_type + "'); return false\" class=\"ui-link-inherit\">";
     element_html += name + "</a></div></div></li>";
@@ -301,14 +299,25 @@ function post_review(){
         review_data_dict.phone = place_data_object.phone;
     }
     
-    console.log("review_data_dict", review_data_dict);
+    console.log("THIS HAS CHANGED", review_data_dict);
     $.ajax({
         type: 'POST',
         url: POST_cofi_places,
         data: review_data_dict,
         success: function(data) {
-             console.log(data);
-             alert("success" ); 
+            console.log("complete", data);
+            alert("Done it!");
         }
-    });
+        });
+        /**beforeSend: function () {
+            $('#save_button').find(input[type=button]').button('disable');
+            document.getElementById('mobile').pageLoading = false;
+        },	
+        success: function(data) {
+            document.getElementById('mobile').pageLoading = true;
+            console.log("complete", data);
+        },
+        fail: function() {
+             alert("error"); }
+    });*/
 }

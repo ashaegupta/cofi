@@ -11,7 +11,21 @@ def add_place(name, phone, lat, lon, address, fs_id=None, yelp_id=None, wifi=Non
     # ensure it has a fs_id or a yelp_id
     if not (fs_id or yelp_id):
         return ErrorResponse.POST_INVALID_ARGS_FS_ID_YELP_ID
+    
+    # Create a review dict
     review = make_review_dict(wifi, plugs, exp)  
+    
+    # Check if place already exists in the database
+    if fs_id:
+        spec = {PLACE.A_FS_ID: fs_id}
+        place_dict = Place.mdbc.find_one(spec)
+        
+        # If place exists add a review to it
+        if place_dict:
+            place_id = place_dict.get(PLACE.A_PLACE_ID)
+            return Place.review_place(place_id=place_id, review=review)
+        
+    # If place doesn't already exist in the database add it
     place_data = {
           Place.A_NAME: name,
           Place.A_PHONE: phone,

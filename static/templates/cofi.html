@@ -24,7 +24,7 @@
       <div data-role="page" data-theme="b" id="map" class="map_page">
           <div data-role="header" data-position="inline" data-mini="true">
             	<a href="#add" data-role="button" data-mini="true"
-            	data-inline="true" class="ui-btn-right" data-theme="c" data-transition="slide" onclick="fs_search(); return false">+</a>
+            	data-inline="true" class="ui-btn-right" data-theme="c" onclick="fs_search(); return false">+</a>
             	<h1>cofi</h1>
             	<a href="#" data-role="button" data-mini="true" id="refresh" onclick="refresh(); return false"
             	data-inline="true" class="ui-btn-left" data-theme="c">refresh</a>            	
@@ -37,8 +37,8 @@
       <!--Add Place-->
       <div data-role="page" id="add" data-theme="b">
           <div data-role="header" data-position="inline" data-fixed="true">
-              <a href="#map" data-role="button" class="ui-btn-left" data-theme="c" data-transition="slide"
-              data-direction="reverse" data-mini="true" onclick="refresh(); return false">map</a>
+              <a href="#map" data-role="button" class="ui-btn-left" data-theme="c" 
+              data-mini="true">map</a>
           	  <h1>Add a place</h1>
           	  <a href="#" data-role="button" data-mini="true" class="ui-btn-right" data-theme="c" 
           	        data-transition="slide" onclick="fs_search(); return false">search</a>
@@ -55,10 +55,9 @@
        <div data-role="page" id="review" data-theme="b">
            <div data-role="header" data-position="inline" data-fixed="true">
            	  <a href="#add" data-role="button" class="ui-btn-left" data-mini="true" data-theme="c"
-                      data-transition="slide" data-direction="reverse" onclick="add(); return false">places</a>
+           	  onclick="add(); return false">places</a>
                       <h1 id="review_header"></h1>
-            <a href="#map" data-role="button" class="ui-btn-right" data-mini="true" data-theme="c"
-                    data-transition="slide" data-direction="reverse" onclick="refresh(); return false">map</a>
+            <a href="#map" data-role="button" class="ui-btn-right" data-mini="true" data-theme="c">map</a>
                       
            </div>
                 
@@ -70,7 +69,7 @@
                             <input type="radio" name="wifi" id="wifi_radio_2" value="2" class="radio_button" data-theme="c"/>
                             <label for="wifi_radio_2" data-theme="c">All day</label>
                             <input type="radio" name="wifi" id="wifi_radio_1" value="1" class="radio_button" data-theme="c"/>
-                            <label for="wifi_radio_1" data-theme="c">By Hour</label>
+                            <label for="wifi_radio_1" data-theme="c">Hourly</label>
                             <input type="radio" name="wifi" id="wifi_radio_0" value="0" class="radio_button" data-theme="c"/>
                             <label for="wifi_radio_0" data-theme="c">None</label>
                        </fieldset>
@@ -92,7 +91,8 @@
                             <input type="radio" name="exp" id="exp_radio_0" value="0" class="radio_button" data-theme="c"/>
                             <label for="exp_radio_0" data-theme="c">Bad</label>
                         </fieldset>
-                        <a href="#" data-role="button" data-mini="true" data-theme="c" onclick="post_review(); return false">Save</a>
+                        <a href="#" data-role="button" id="save_button" 
+                        data-mini="true" data-theme="c" onclick="post_review(); return false">Save</a>
                 </form>
            </div>
       

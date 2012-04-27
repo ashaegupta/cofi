@@ -61,7 +61,7 @@ class Place(MongoMixIn.MongoMixIn):
         coll = klass.mdbc()
         coll.ensure_index([(klass.A_PHONE, ASCENDING)], unique=True)
         coll.ensure_index([(klass.A_PLACE_ID, ASCENDING)], unique=True)
-        coll.ensure_index([(klass.A_FS_ID, ASCENDING)], unique=False)
+        coll.ensure_index([(klass.A_FS_ID, ASCENDING)], unique=True)
         coll.ensure_index([(klass.A_YELP_ID, ASCENDING)], unique=False)
         coll.ensure_index([(klass.A_LOCATION, GEO2D)], unique=False)
     

@@ -6,6 +6,7 @@ import pprint
 import format_api_resp
 from utils import ErrorResponse
 from utils import settings
+from model.Place import Place
 
 REQUIRED_RESULTS = 5
 
@@ -58,6 +59,7 @@ def merge(yelp_results, fs_results):
     for cp in common_phones:
         if len(merged_results) < REQUIRED_RESULTS:
             cp_place_data = yelp_results.get(cp)
+            cp_place_data[Place.A_FS_ID] = fs_results.get(cp).get('id')
             merged_results.append(cp_place_data)
             # fs_tips = fs_results.get(cp).get('tips')
             # merged_results[cp]['tips'] = fs_tips

@@ -142,7 +142,7 @@ class MongoMixIn(object):
 
     @classmethod
     def find_by_place_id(klass, place_id):
-      spec = {klass.A_PLACE_ID:int(place_id)}
+      spec = {klass.A_PLACE_ID: place_id}
       cursor = klass.mdbc().find(spec)
       return klass.dict_from_cursor(cursor=cursor, key=klass.A_PLACE_ID, remove_object_id=True)
       

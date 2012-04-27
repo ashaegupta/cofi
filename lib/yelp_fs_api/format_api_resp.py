@@ -32,6 +32,5 @@ def yelp(resp):
     output[Place.A_RECOS] = {}
     output[Place.A_RECOS][Place.A_WIFI] = Place.A_HIGH
     
-    print output
     return output
     
