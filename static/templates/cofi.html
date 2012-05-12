@@ -12,7 +12,7 @@
             <script type="text/javascript"
                    src="{{static_url('js/cofi.js')}}">
             </script>
-            <script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+            <script src="{{static_url('js/jquerymobile.js')}}"></script>
            <script type="text/javascript"
                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAaBTMLD9cn5lMR5qF9NGwumhWZOkxosBY&sensor=true">
            </script>
@@ -22,7 +22,7 @@
   <body onload="start_cofi()">
       <!--Map-->
       <div data-role="page" data-theme="b" id="map" class="map_page">
-          <div data-role="header" data-position="inline" data-mini="true">
+          <div data-role="header" data-mini="true">
             	<a href="#add" data-role="button" data-mini="true"
             	data-inline="true" class="ui-btn-right" data-theme="c" onclick="fs_search(); return false">+</a>
             	<h1>cofi</h1>
@@ -36,7 +36,7 @@
       
       <!--Add Place-->
       <div data-role="page" id="add" data-theme="b">
-          <div data-role="header" data-position="inline" data-fixed="true">
+          <div data-role="header" data-fixed="true">
               <a href="#map" data-role="button" class="ui-btn-left" data-theme="c" 
               data-mini="true">map</a>
           	  <h1>Add a place</h1>
@@ -53,7 +53,7 @@
     
       <!--Review Place-->
        <div data-role="page" id="review" data-theme="b">
-           <div data-role="header" data-position="inline" data-fixed="true">
+           <div data-role="header" data-fixed="true">
            	  <a href="#add" data-role="button" class="ui-btn-left" data-mini="true" data-theme="c"
            	  onclick="add(); return false">places</a>
                       <h1 id="review_header"></h1>
@@ -65,11 +65,11 @@
                <form id="review_form">
                    <input type="hidden" id="review_place_id" name="" value="">
                        <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c" data-mini="true">
-                            <legend>Wifi:</legend>
+                            <legend>Free Wifi:</legend>
                             <input type="radio" name="wifi" id="wifi_radio_2" value="2" class="radio_button" data-theme="c"/>
-                            <label for="wifi_radio_2" data-theme="c">All day</label>
+                            <label for="wifi_radio_2" data-theme="c">No limits</label>
                             <input type="radio" name="wifi" id="wifi_radio_1" value="1" class="radio_button" data-theme="c"/>
-                            <label for="wifi_radio_1" data-theme="c">Hourly</label>
+                            <label for="wifi_radio_1" data-theme="c">By hour</label>
                             <input type="radio" name="wifi" id="wifi_radio_0" value="0" class="radio_button" data-theme="c"/>
                             <label for="wifi_radio_0" data-theme="c">None</label>
                        </fieldset>
@@ -93,6 +93,7 @@
                         </fieldset>
                         <a href="#" data-role="button" id="save_button" 
                         data-mini="true" data-theme="c" onclick="post_review(); return false">Save</a>
+                        <div id="success_dialog" data-rel="dialog"></div>
                 </form>
            </div>
       

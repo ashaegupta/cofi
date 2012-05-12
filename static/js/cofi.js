@@ -15,7 +15,7 @@ var adjust_map_bounds_control = true;
 
 $(document).bind("mobileinit", function(){
   $.mobile.orientationChangeEnabled = false;
-  $.mobile.loadingMessage = "brewing";
+  $.mobile.loadingMessage = "Brewing...";
   $.mobile.pageLoadErrorMessage = "Whoopsies. There's been an error.";
 });
 
@@ -299,25 +299,14 @@ function post_review(){
         review_data_dict.phone = place_data_object.phone;
     }
     
-    console.log("THIS HAS CHANGED", review_data_dict);
+    console.log("review dict", review_data_dict);
     $.ajax({
         type: 'POST',
         url: POST_cofi_places,
         data: review_data_dict,
         success: function(data) {
-            console.log("complete", data);
-            alert("Done it!");
+            //$.mobile.changePage('#success_dialog', 'pop', true, true);
+			$.mobile.changePage("#map");
         }
-        });
-        /**beforeSend: function () {
-            $('#save_button').find(input[type=button]').button('disable');
-            document.getElementById('mobile').pageLoading = false;
-        },	
-        success: function(data) {
-            document.getElementById('mobile').pageLoading = true;
-            console.log("complete", data);
-        },
-        fail: function() {
-             alert("error"); }
-    });*/
-}
+    });
+}   

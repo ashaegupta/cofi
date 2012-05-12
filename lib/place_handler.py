@@ -17,23 +17,27 @@ def add_place(name, phone, lat, lon, address, fs_id=None, yelp_id=None, wifi=Non
     
     # Check if place already exists in the database
     if fs_id:
-        spec = {PLACE.A_FS_ID: fs_id}
-        place_dict = Place.mdbc.find_one(spec)
+        spec = {Place.A_FS_ID: fs_id}
+        place_dict = Place.mdbc().find_one(spec)
         
         # If place exists add a review to it
         if place_dict:
-            place_id = place_dict.get(PLACE.A_PLACE_ID)
+            place_id = place_dict.get(Place.A_FS_ID)
             return Place.review_place(place_id=place_id, review=review)
         
     # If place doesn't already exist in the database add it
     place_data = {
           Place.A_NAME: name,
-          Place.A_PHONE: phone,
           Place.A_FS_ID: fs_id,
           Place.A_YELP_ID: yelp_id,
           Place.A_ADDRESS: address,
           Place.A_LOCATION: [float(lat), float(lon)]
     }
+    
+    # Only add phone if it's not null
+    if phone:
+        place_data[Place.A_PHONE] = phone
+    
     return Place.add_place(place_data=place_data, review=review)
     
 def review_place(place_id, wifi=None, plugs=None, exp=None):
@@ -111,7 +115,6 @@ def make_place_output(place_input, recos=None):
     output_keys = [Place.A_PLACE_ID,Place.A_NAME, Place.A_PHONE, Place.A_ADDRESS]
     for k in output_keys:
         place_output[k] = place_input[k]
-    
     loc = place_input[Place.A_LOCATION]
     place_output[Place.A_LAT] = loc[0]
     place_output[Place.A_LON] = loc[1]
